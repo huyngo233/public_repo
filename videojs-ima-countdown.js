@@ -80,7 +80,7 @@
         }
   
         if (this.options_.text !== '') {
-          this.textEl_.innerHTML = this.options_.text;
+          this.textEl_.innerHTML = this.options_.text + '&nbsp;';
         }
   
         return this.textEl_;
@@ -253,20 +253,20 @@
         onAdStop(player);
       });
 
-      player.on('ads-pod-started', function () {
-        console.log('pod started');
-        onAdPod('pod started', player);
-      });
+      // player.on('ads-pod-started', function () {
+      //   console.log('pod started');
+      //   onAdPod('pod started', player);
+      // });
 
       player.on('ads-ad-started', function () {
         console.log('ads-first-quartile');
         onAdPod('ad-started', player);
       });
 
-      player.on('ads-first-quartile', function () {
-        console.log('ads-first-quartile');
-        onAdPod('ads-first-quartile', player);
-      });
+      // player.on('ads-first-quartile', function () {
+      //   console.log('ads-first-quartile');
+      //   onAdPod('ads-first-quartile', player);
+      // });
   
       player.countdown.timeEl = countdown.timeEl_;
       player.countdown.currentAdPosEl = countdown.currentAdPosEl_;
