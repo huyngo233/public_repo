@@ -207,8 +207,8 @@
     }
   }
 
-  function onAdStart(player) {
-    console.log('play', player);
+  function onAdPod(status, player) {
+    console.log(status, player);
     console.log('player.ads', player.ads);
     console.log('player.ads.pod', player.ads.pod);
 
@@ -254,7 +254,18 @@
       });
 
       player.on('ads-pod-started', function () {
-        onAdStart(player);
+        console.log('pod started');
+        onAdPod('pod started', player);
+      });
+
+      player.on('ads-ad-started', function () {
+        console.log('ads-first-quartile');
+        onAdPod('ad-started', player);
+      });
+
+      player.on('ads-first-quartile', function () {
+        console.log('ads-first-quartile');
+        onAdPod('ads-first-quartile', player);
       });
   
       player.countdown.timeEl = countdown.timeEl_;
