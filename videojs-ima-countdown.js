@@ -181,7 +181,7 @@
     console.log('onAdsAdStarted', player);
 
     const countAdsEl = player.countdown.countAdsEl;
-    countAdsEl.innerHTML = ` ${player.ads.pod.id} of ${player.ads.pod.size}`
+    countAdsEl.innerHTML = '&nbsp;' + `${player.ads.pod.id} of ${player.ads.pod.size}`
   }
   
   function onAdPlay(player) {
