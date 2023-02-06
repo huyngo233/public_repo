@@ -102,16 +102,16 @@
     }, {
       key: 'createCurrentAdPosEl',
       value: function createCurrentAdPosEl(el) {
-        this.currentPosEl_ = _videoJs2['default'].createEl('span', {
+        this.currentAdPosEl_ = _videoJs2['default'].createEl('span', {
           className: 'vjs-ima-current-ad-pos'
         });
   
         if (el) {
-          el.appendChild(this.currentPosEl_);
+          el.appendChild(this.currentAdPosEl_);
         }
   
-        this.currentPosEl_.innerHTML = '';
-        return this.currentPosEl_;
+        this.currentAdPosEl_.innerHTML = '';
+        return this.currentAdPosEl_;
       }
     }, {
       key: 'createBelongAdEl',
@@ -130,16 +130,16 @@
     }, {
       key: 'createTotalAdsEl',
       value: function createTotalAdsEl(el) {
-        this.totalAdEl_ = _videoJs2['default'].createEl('span', {
+        this.totalAdsEl_ = _videoJs2['default'].createEl('span', {
           className: 'vjs-ima-total-ads'
         });
   
         if (el) {
-          el.appendChild(this.totalAdEl_);
+          el.appendChild(this.totalAdsEl_);
         }
   
-        this.totalAdEl_.innerHTML = '';
-        return this.totalAdEl_;
+        this.totalAdsEl_.innerHTML = '';
+        return this.totalAdsEl_;
       }
     }, {
       key: 'createConnectSizeAndTime',
@@ -206,10 +206,19 @@
       updateTime(player, remainingTime);
     }
   }
+
+  function onAdStart(player) {
+    console.log('play', player);
+
+    const currentAdPosEl = player.countdown.currentAdPosEl_;
+    const totalAdsEl = player.countdown.totalAdsEl_;
+
+    currentAdPosEl.innerHTML = player.ads.pod.id;
+    totalAdsEl.innerHTML = player.ads.pod.size;
+  }
   
   function onAdPlay(player) {
     debug(player, 'IMA Countdown timerInterval Started');
-    console.log('play', player);
     player.countdown.timerInterval = setInterval(timeRemaining.bind(player, player), 250);
   }
   
@@ -227,6 +236,7 @@
       var countdown = addControl(player);
   
       player.on('adstart', function () {
+        onAdStart(player);
         onAdPlay(player);
       });
   
@@ -264,6 +274,8 @@
     settings.timerInterval = null;
     settings.timeEl = null;
     settings.timeRemaining = null;
+    settings.currentAdPosEl_ = null;
+    settings.totalAdsEl_ = null;
   
     this.countdown = settings;
   
