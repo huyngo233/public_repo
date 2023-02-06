@@ -210,8 +210,8 @@
   function onAdStart(player) {
     console.log('play', player);
 
-    const currentAdPosEl = player.countdown.currentAdPosEl_;
-    const totalAdsEl = player.countdown.totalAdsEl_;
+    const currentAdPosEl = player.countdown.currentAdPosEl;
+    const totalAdsEl = player.countdown.totalAdsEl;
 
     currentAdPosEl.innerHTML = player.ads.pod.id;
     totalAdsEl.innerHTML = player.ads.pod.size;
