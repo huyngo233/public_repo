@@ -209,6 +209,7 @@
   
   function onAdPlay(player) {
     debug(player, 'IMA Countdown timerInterval Started');
+    console.log('play', player);
     player.countdown.timerInterval = setInterval(timeRemaining.bind(player, player), 250);
   }
   
