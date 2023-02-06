@@ -60,9 +60,10 @@
         var el = _get(Object.getPrototypeOf(Countdown.prototype), 'createEl', this).call(this, tag, props, attributes);
   
         this.createTextEl(el);
-        this.createCurrentAdPosEl(el);
-        this.createBelongAdEl(el);
-        this.createTotalAdsEl(el);
+        // this.createCurrentAdPosEl(el);
+        // this.createBelongAdEl(el);
+        // this.createTotalAdsEl(el);
+        this.createCountAdsEl(el);
         this.createConnectSizeAndTime(el);
         this.createTimeEl(el);
   
@@ -100,48 +101,64 @@
         return this.timeEl_;
       }
     }, {
-      key: 'createCurrentAdPosEl',
-      value: function createCurrentAdPosEl(el) {
-        this.currentAdPosEl_ = _videoJs2['default'].createEl('span', {
-          className: 'vjs-ima-current-ad-pos'
+      key: 'createCountAdsEl',
+      value: function createCountAdsEl(el) {
+        this.countAdsEl_ = _videoJs2['default'].createEl('span', {
+          className: 'vjs-ima-count-ads'
         });
   
         if (el) {
-          el.appendChild(this.currentAdPosEl_);
+          el.appendChild(this.countAdsEl_);
         }
   
-        this.currentAdPosEl_.innerHTML = '';
-        return this.currentAdPosEl_;
+        this.countAdsEl_.innerHTML = '';
+        return this.countAdsEl_;
       }
-    }, {
-      key: 'createBelongAdEl',
-      value: function createBelongAdEl(el) {
-        this.belongAd_ = _videoJs2['default'].createEl('span', {
-          className: 'vjs-ima-belong-ad'
-        });
+    }
+    // , {
+    //   key: 'createCurrentAdPosEl',
+    //   value: function createCurrentAdPosEl(el) {
+    //     this.currentAdPosEl_ = _videoJs2['default'].createEl('span', {
+    //       className: 'vjs-ima-current-ad-pos'
+    //     });
   
-        if (el) {
-          el.appendChild(this.belongAd_);
-        }
+    //     if (el) {
+    //       el.appendChild(this.currentAdPosEl_);
+    //     }
   
-        this.belongAd_.innerHTML = '&nbsp;' + 'of' + '&nbsp;';
-        return this.belongAd_;
-      }
-    }, {
-      key: 'createTotalAdsEl',
-      value: function createTotalAdsEl(el) {
-        this.totalAdsEl_ = _videoJs2['default'].createEl('span', {
-          className: 'vjs-ima-total-ads'
-        });
+    //     this.currentAdPosEl_.innerHTML = '';
+    //     return this.currentAdPosEl_;
+    //   }
+    // }, {
+    //   key: 'createBelongAdEl',
+    //   value: function createBelongAdEl(el) {
+    //     this.belongAd_ = _videoJs2['default'].createEl('span', {
+    //       className: 'vjs-ima-belong-ad'
+    //     });
   
-        if (el) {
-          el.appendChild(this.totalAdsEl_);
-        }
+    //     if (el) {
+    //       el.appendChild(this.belongAd_);
+    //     }
   
-        this.totalAdsEl_.innerHTML = '';
-        return this.totalAdsEl_;
-      }
-    }, {
+    //     this.belongAd_.innerHTML = '&nbsp;' + 'of' + '&nbsp;';
+    //     return this.belongAd_;
+    //   }
+    // }, {
+    //   key: 'createTotalAdsEl',
+    //   value: function createTotalAdsEl(el) {
+    //     this.totalAdsEl_ = _videoJs2['default'].createEl('span', {
+    //       className: 'vjs-ima-total-ads'
+    //     });
+  
+    //     if (el) {
+    //       el.appendChild(this.totalAdsEl_);
+    //     }
+  
+    //     this.totalAdsEl_.innerHTML = '';
+    //     return this.totalAdsEl_;
+    //   }
+    // }
+    , {
       key: 'createConnectSizeAndTime',
       value: function createConnectSizeAndTime(el) {
         this.connectSign_ = _videoJs2['default'].createEl('span', {
@@ -152,7 +169,7 @@
           el.appendChild(this.connectSign_);
         }
   
-        this.connectSign_.innerHTML = '&nbsp;' + '.' + '&nbsp;';
+        this.connectSign_.innerHTML = '&nbsp;' + '.';
         return this.connectSign_;
       }
     }
@@ -207,14 +224,17 @@
     }
   }
 
-  function onAdsAdStarted(status, player) {
-    console.log(status, player);
+  function onAdsAdStarted(player) {
+    console.log('onAdsAdStarted', player);
 
-    const currentAdPosEl = player.countdown.currentAdPosEl;
-    const totalAdsEl = player.countdown.totalAdsEl;
+    // const currentAdPosEl = player.countdown.currentAdPosEl;
+    // const totalAdsEl = player.countdown.totalAdsEl;
 
-    currentAdPosEl.innerHTML = player.ads.pod.id;
-    totalAdsEl.innerHTML = player.ads.pod.size;
+    // currentAdPosEl.innerHTML = player.ads.pod.id;
+    // totalAdsEl.innerHTML = player.ads.pod.size;
+
+    const countAdsEl = player.countdown.countAdsEl;
+    countAdsEl.innerHTML = `${player.ads.pod.id} of ${player.ads.pod.size}`
   }
   
   function onAdPlay(player) {
@@ -252,12 +272,13 @@
       });
 
       player.on('ads-ad-started', function () {
-        onAdsAdStarted('ad-started', player);
+        onAdsAdStarted(player);
       });
   
       player.countdown.timeEl = countdown.timeEl_;
-      player.countdown.currentAdPosEl = countdown.currentAdPosEl_;
-      player.countdown.totalAdsEl = countdown.totalAdsEl_;
+      player.countdown.countAdsEl = countdown.countAdsEl_;
+      // player.countdown.currentAdPosEl = countdown.currentAdPosEl_;
+      // player.countdown.totalAdsEl = countdown.totalAdsEl_;
     }
   }
   
@@ -279,8 +300,9 @@
     settings.timerInterval = null;
     settings.timeEl = null;
     settings.timeRemaining = null;
-    settings.currentAdPosEl = null;
-    settings.totalAdsEl = null;
+    // settings.currentAdPosEl = null;
+    // settings.totalAdsEl = null;
+    settings.countAdsEl = null;
   
     this.countdown = settings;
   
