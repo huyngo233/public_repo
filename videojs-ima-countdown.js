@@ -212,11 +212,11 @@
     console.log('player.ads', player.ads);
     console.log('player.ads.pod', player.ads.pod);
 
-    const currentAdPosEl = player.countdown.currentAdPosEl;
-    const totalAdsEl = player.countdown.totalAdsEl;
+    // const currentAdPosEl = player.countdown.currentAdPosEl;
+    // const totalAdsEl = player.countdown.totalAdsEl;
 
-    currentAdPosEl.innerHTML = player.ads.pod.id;
-    totalAdsEl.innerHTML = player.ads.pod.size;
+    // currentAdPosEl.innerHTML = player.ads.pod.id;
+    // totalAdsEl.innerHTML = player.ads.pod.size;
   }
   
   function onAdPlay(player) {
@@ -238,7 +238,6 @@
       var countdown = addControl(player);
   
       player.on('adstart', function () {
-        onAdStart(player);
         onAdPlay(player);
       });
   
@@ -252,6 +251,10 @@
   
       player.on('ads-pause', function () {
         onAdStop(player);
+      });
+
+      player.on('ads-pod-started', function () {
+        onAdStart(player);
       });
   
       player.countdown.timeEl = countdown.timeEl_;
