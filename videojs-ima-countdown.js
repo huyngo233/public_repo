@@ -178,8 +178,7 @@
   }
 
   function onAdsAdStarted(player) {
-    console.log('onAdsAdStarted', player);
-
+    debug(player, 'Start to set current ad pos and total ads');
     const countAdsEl = player.countdown.countAdsEl;
     countAdsEl.innerHTML = '&nbsp;' + `${player.ads.pod.id} of ${player.ads.pod.size}`
   }
