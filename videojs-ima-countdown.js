@@ -253,6 +253,8 @@
       });
   
       player.countdown.timeEl = countdown.timeEl_;
+      player.countdown.currentAdPosEl = countdown.currentAdPosEl_;
+      player.countdown.totalAdsEl = countdown.totalAdsEl_;
     }
   }
   
@@ -274,8 +276,8 @@
     settings.timerInterval = null;
     settings.timeEl = null;
     settings.timeRemaining = null;
-    settings.currentAdPosEl_ = null;
-    settings.totalAdsEl_ = null;
+    settings.currentAdPosEl = null;
+    settings.totalAdsEl = null;
   
     this.countdown = settings;
   
