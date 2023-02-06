@@ -124,7 +124,7 @@
           el.appendChild(this.belongAd_);
         }
   
-        this.belongAd_.innerHTML = 'of';
+        this.belongAd_.innerHTML = '&nbsp;' + 'of' + '&nbsp;';
         return this.belongAd_;
       }
     }, {
@@ -152,7 +152,7 @@
           el.appendChild(this.connectSign_);
         }
   
-        this.connectSign_.innerHTML = ' . ';
+        this.connectSign_.innerHTML = '&nbsp;' + '.' + '&nbsp;';
         return this.connectSign_;
       }
     }
