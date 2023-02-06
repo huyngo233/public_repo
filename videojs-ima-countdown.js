@@ -207,16 +207,14 @@
     }
   }
 
-  function onAdPod(status, player) {
+  function onAdsAdStarted(status, player) {
     console.log(status, player);
-    console.log('player.ads', player.ads);
-    console.log('player.ads.pod', player.ads.pod);
 
-    // const currentAdPosEl = player.countdown.currentAdPosEl;
-    // const totalAdsEl = player.countdown.totalAdsEl;
+    const currentAdPosEl = player.countdown.currentAdPosEl;
+    const totalAdsEl = player.countdown.totalAdsEl;
 
-    // currentAdPosEl.innerHTML = player.ads.pod.id;
-    // totalAdsEl.innerHTML = player.ads.pod.size;
+    currentAdPosEl.innerHTML = player.ads.pod.id;
+    totalAdsEl.innerHTML = player.ads.pod.size;
   }
   
   function onAdPlay(player) {
@@ -253,20 +251,9 @@
         onAdStop(player);
       });
 
-      // player.on('ads-pod-started', function () {
-      //   console.log('pod started');
-      //   onAdPod('pod started', player);
-      // });
-
       player.on('ads-ad-started', function () {
-        console.log('ads-first-quartile');
-        onAdPod('ad-started', player);
+        onAdsAdStarted('ad-started', player);
       });
-
-      // player.on('ads-first-quartile', function () {
-      //   console.log('ads-first-quartile');
-      //   onAdPod('ads-first-quartile', player);
-      // });
   
       player.countdown.timeEl = countdown.timeEl_;
       player.countdown.currentAdPosEl = countdown.currentAdPosEl_;
