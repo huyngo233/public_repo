@@ -163,6 +163,8 @@
   
   function addControl(player) {
     var adControlBar = player.controlBar;
+    console.log('player', player);
+    console.log('adControlBar', adControlBar);
   
     return adControlBar.addChild('Countdown', player.countdown, [player.countdown.controlBarPosition]);
   }
