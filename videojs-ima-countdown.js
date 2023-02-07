@@ -165,6 +165,7 @@
     var adControlBar = player.controlBar;
     console.log('player', player);
   
+    return adControlBar.addChild('Countdown', player.countdown);
     return adControlBar.addChild('Countdown', player.countdown, [player.countdown.controlBarPosition]);
   }
   
