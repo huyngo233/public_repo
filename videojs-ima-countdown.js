@@ -13,7 +13,7 @@
 
   var defaults = {
     debug: false,
-    text: 'Advertisement',
+    text: 'AD',
     controlBarPosition: 1
   }; // class Countdown extends Component {
 
