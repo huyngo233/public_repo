@@ -228,8 +228,9 @@
 	  settings.timeEl = null;
 	  settings.timeRemaining = null;
 	  player.countdown = settings;
-	  console.log('playerlocal7', player); // add control
+	  console.log('playerlocal8', player); // add control
 
+	  console.log('control bar', player.getChild('ControlBar'));
 	  var controlBar = player.getChild('ControlBar');
 	  var Countdown = new CountdownComp(player, settings);
 	  controlBar.addChild(Countdown, player.countdown); // end add control
