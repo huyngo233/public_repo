@@ -41,20 +41,16 @@
     settings.timerInterval = null;
     settings.timeEl = null;
     settings.timeRemaining = null;
-    player.countdown = settings; // player.on('ads-load', function() {
-    //   onAdLoad(player);
-    // });
-
-    var textDisplay = document.createElement('p');
-    textDisplay.className = 'vjs-text';
-    textDisplay.innerHTML = "Becoming a plugin developer";
-    console.log('playerlocal', player);
-    player.el().appendChild(textDisplay);
+    player.countdown = settings;
+    console.log('playerlocal2', player);
     var controlBar = player.controlBar.el();
     var time = document.createElement('span');
     time.className = 'vjs-text';
     time.innerHTML = "0:00";
     controlBar.appendChild(time);
+    player.on('ads-load', function () {
+      console.log('ads-load', player); // onAdLoad(player);
+    });
   };
   /**
    * A video.js plugin.
