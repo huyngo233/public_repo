@@ -131,9 +131,8 @@
 	  };
 
 	  return CountdownComp;
-	}(Component);
+	}(Component); // videojs.registerComponent('CountdownComp', CountdownComp);
 
-	videojs__default['default'].registerComponent('CountdownComp', CountdownComp);
 
 	var debug = function debug(player, value) {
 	  /* eslint-disable no-console */
@@ -230,11 +229,11 @@
 	  settings.timeEl = null;
 	  settings.timeRemaining = null;
 	  player.countdown = settings;
-	  console.log('playerlocal8', player); // add control
+	  console.log('playerlocal9', player); // add control
 
-	  console.log('control bar', player.getChild('ControlBar'));
 	  var controlBar = player.getChild('ControlBar');
 	  var Countdown = new CountdownComp(player, settings);
+	  console.log('CountdownComp', Countdown);
 	  controlBar.addChild(Countdown, player.countdown); // end add control
 
 	  player.on('ads-load', function () {
