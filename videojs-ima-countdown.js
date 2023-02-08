@@ -23,34 +23,64 @@
 		throw new Error('Dynamic requires are not currently supported by @rollup/plugin-commonjs');
 	}
 
-	var setPrototypeOf = createCommonjsModule(function (module) {
-	  function _setPrototypeOf(o, p) {
-	    module.exports = _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) {
-	      o.__proto__ = p;
-	      return o;
+	var getPrototypeOf = createCommonjsModule(function (module) {
+	  function _getPrototypeOf(o) {
+	    module.exports = _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) {
+	      return o.__proto__ || Object.getPrototypeOf(o);
 	    };
-
 	    module.exports["default"] = module.exports, module.exports.__esModule = true;
-	    return _setPrototypeOf(o, p);
+	    return _getPrototypeOf(o);
 	  }
 
-	  module.exports = _setPrototypeOf;
+	  module.exports = _getPrototypeOf;
 	  module.exports["default"] = module.exports, module.exports.__esModule = true;
 	});
 
-	var inheritsLoose = createCommonjsModule(function (module) {
-	  function _inheritsLoose(subClass, superClass) {
-	    subClass.prototype = Object.create(superClass.prototype);
-	    subClass.prototype.constructor = subClass;
-	    setPrototypeOf(subClass, superClass);
+	var superPropBase = createCommonjsModule(function (module) {
+	  function _superPropBase(object, property) {
+	    while (!Object.prototype.hasOwnProperty.call(object, property)) {
+	      object = getPrototypeOf(object);
+	      if (object === null) break;
+	    }
+
+	    return object;
 	  }
 
-	  module.exports = _inheritsLoose;
+	  module.exports = _superPropBase;
+	  module.exports["default"] = module.exports, module.exports.__esModule = true;
+	});
+
+	var get = createCommonjsModule(function (module) {
+	  function _get(target, property, receiver) {
+	    if (typeof Reflect !== "undefined" && Reflect.get) {
+	      module.exports = _get = Reflect.get;
+	      module.exports["default"] = module.exports, module.exports.__esModule = true;
+	    } else {
+	      module.exports = _get = function _get(target, property, receiver) {
+	        var base = superPropBase(target, property);
+	        if (!base) return;
+	        var desc = Object.getOwnPropertyDescriptor(base, property);
+
+	        if (desc.get) {
+	          return desc.get.call(receiver);
+	        }
+
+	        return desc.value;
+	      };
+
+	      module.exports["default"] = module.exports, module.exports.__esModule = true;
+	    }
+
+	    return _get(target, property, receiver || target);
+	  }
+
+	  module.exports = _get;
 	  module.exports["default"] = module.exports, module.exports.__esModule = true;
 	});
 
 	var version = "0.0.0";
 
+	var _obj;
 	var Component = videojs__default['default'].getComponent('Component'); // Default options for the plugin.
 
 	var defaults = {
@@ -58,21 +88,14 @@
 	  text: 'AD',
 	  controlBarPosition: 1
 	};
-
-	var Countdown = /*#__PURE__*/function (_Component) {
-	  inheritsLoose(Countdown, _Component);
-
-	  function Countdown(player, options) {
-	    return _Component.call(this, player, options) || this;
-	  }
-
-	  var _proto = Countdown.prototype;
-
-	  _proto.buildCSSClass = function buildCSSClass() {
+	var Countdown = videojs__default['default'].extend(Component, _obj = {
+	  constructor: function constructor(player, options) {
+	    Component.apply(this, arguments);
+	  },
+	  buildCSSClass: function buildCSSClass() {
 	    return 'vjs-ima-countdown';
-	  };
-
-	  _proto.createEl = function createEl(tag, props, attributes) {
+	  },
+	  createEl: function createEl(tag, props, attributes) {
 	    if (tag === void 0) {
 	      tag = 'div';
 	    }
@@ -89,14 +112,13 @@
 	      className: 'vjs-ima-countdown vjs-time-control'
 	    };
 
-	    var el = _Component.prototype.createEl.call(this, tag, props, attributes);
+	    var el = get(getPrototypeOf(_obj), "createEl", this).call(this, tag, props, attributes);
 
 	    this.createTextEl(el);
 	    this.createTimeEl(el);
 	    return el;
-	  };
-
-	  _proto.createTextEl = function createTextEl(el) {
+	  },
+	  createTextEl: function createTextEl(el) {
 	    this.textEl_ = videojs__default['default'].createEl('span', {
 	      className: 'vjs-ima-countdown-text'
 	    });
@@ -110,9 +132,8 @@
 	    }
 
 	    return this.textEl_;
-	  };
-
-	  _proto.createTimeEl = function createTimeEl(el) {
+	  },
+	  createTimeEl: function createTimeEl(el) {
 	    this.timeEl_ = videojs__default['default'].createEl('span', {
 	      className: 'vjs-ima-countdown-time'
 	    });
@@ -123,11 +144,8 @@
 
 	    this.timeEl_.innerHTML = '';
 	    return this.timeEl_;
-	  };
-
-	  return Countdown;
-	}(Component);
-
+	  }
+	});
 	videojs__default['default'].registerComponent('Countdown', Countdown);
 	//   const timeRemainingEl = player.countdown.timeEl;
 	//   let timeHTML = '';
