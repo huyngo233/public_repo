@@ -68,9 +68,9 @@
 
   };
 
-  function updateTime(player, remainingTime) {
+  function updateTime(player, remainingTime, adDurationEl) {
     // const timeRemainingEl = player.countdown.timeEl;
-    var timeRemainingEl = adRemainingTimeEl();
+    var timeRemainingEl = adRemainingTimeEl(adDurationEl);
     var timeHTML = '';
 
     if (remainingTime !== 0) {
@@ -119,27 +119,27 @@
     return countdownDiv;
   };
 
-  function timeRemaining(player) {
+  function timeRemaining(player, adDurationEl) {
     var remainingTime = player.ima3.adsManager.getRemainingTime();
 
     if (player.ads.state !== 'ad-playback') {
-      updateTime(player, 0);
+      updateTime(player, 0, adDurationEl);
     } else {
-      updateTime(player, remainingTime);
+      updateTime(player, remainingTime, adDurationEl);
     }
   }
 
-  function onAdPlay(player) {
+  function onAdPlay(player, adDurationEl) {
     debug(player, "IMA Countdown timerInterval Started");
-    player.countdown.timerInterval = setInterval(timeRemaining.bind(player, player), 250);
+    player.countdown.timerInterval = setInterval(timeRemaining.bind(player, adDurationEl), 250);
   }
 
-  function onAdLoad(player) {
+  function onAdLoad(player, adDurationEl) {
     // const countdown = addControl(player);
     // player.countdown.timeEl = countdown.timeEl_;
     player.on('adstart', function () {
       console.log('adstart', player);
-      onAdPlay(player);
+      onAdPlay(player, adDurationEl);
     });
     player.on('ads-play', function () {
       console.log('ads-play', player); // onAdPlay(player);
@@ -177,7 +177,7 @@
     settings.timeEl = null;
     settings.timeRemaining = null;
     player.countdown = settings;
-    console.log('playerlocal12', player);
+    console.log('playerlocal13', player);
     var controlBar = player.controlBar.el();
     var adDurationEl = createAdDurationEl();
     controlBar.appendChild(adDurationEl); // add control
@@ -188,7 +188,7 @@
     // end add control
 
     player.on('ads-load', function () {
-      onAdLoad(player);
+      onAdLoad(player, adDurationEl);
     });
   };
   /**
