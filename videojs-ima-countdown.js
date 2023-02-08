@@ -138,12 +138,13 @@
   function onAdsAdStarted(player, adDurationEl) {
     debug(player, 'Start to set current ad pos and total ads');
     var countAdsEl = adCountAdsEl(adDurationEl);
-    countAdsEl.innerHTML = '&nbsp;' + (player.ads.pod.id + " of " + player.ads.pod.size);
+    countAdsEl.innerHTML = player.ads.pod.id + " of " + player.ads.pod.size;
   }
 
   function onAdsAdEnded(player, adDurationEl) {
     debug(player, "Destroy adDuration Element");
-    player.controlBar.el(); // controlBar.removeChild(adDurationEl);
+    var controlBar = player.controlBar.el();
+    console.log('controlBar', controlBar); // controlBar.removeChild(adDurationEl);
   }
 
   function onAdPlay(player, adDurationEl) {
@@ -164,15 +165,12 @@
       onAdPlay(player, adDurationEl);
     });
     player.on('ads-play', function () {
-      console.log('ads-play', player);
       onAdPlay(player, adDurationEl);
     });
     player.on('adend', function () {
-      console.log('adend', player);
       onAdStop(player);
     });
     player.on('ads-pause', function () {
-      console.log('ads-pause', player);
       onAdStop(player);
     });
     player.on('ads-ad-started', function () {
@@ -208,7 +206,7 @@
     settings.timeEl = null;
     settings.timeRemaining = null;
     player.countdown = settings;
-    console.log('playerlocal17', player);
+    console.log('playerlocal18', player);
     var controlBar = player.controlBar.el();
     var adDurationEl = createAdDurationEl();
     controlBar.appendChild(adDurationEl); // add control
