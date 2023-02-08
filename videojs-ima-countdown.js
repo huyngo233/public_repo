@@ -85,7 +85,6 @@
     }
 
     debug(player, 'IMA Countdown Remaining: ' + timeHTML);
-    console.log('timeHTML', timeHTML);
     timeRemainingEl.innerHTML = timeHTML;
   } // function addControl(player) {
   //   const adControlBar = player.getChild('ControlBar');
@@ -98,8 +97,11 @@
 
 
   var adRemainingTimeEl = function adRemainingTimeEl(adDurationEl) {
-    if (!adDurationEl) return null;
     return adDurationEl.querySelector(".vjs-ima-countdown-time");
+  };
+
+  var adCountAdsEl = function adCountAdsEl(adDurationEl) {
+    return adDurationEl.querySelector(".vjs-ima-countdown-ads-count");
   };
 
   var createAdDurationEl = function createAdDurationEl() {
@@ -113,6 +115,10 @@
     adsCount.className = "vjs-ima-countdown-child vjs-ima-countdown-ads-count";
     adsCount.innerText = "0 of 0";
     countdownDiv.appendChild(adsCount);
+    var adConectDot = document.createElement("span");
+    adConectDot.className = "vjs-ima-countdown-child vjs-ima-countdown-ad-connect-dot";
+    adConectDot.innerText = ".";
+    countdownDiv.appendChild(adConectDot);
     var adTime = document.createElement("span");
     adTime.className = "vjs-ima-countdown-child vjs-ima-countdown-time";
     countdownDiv.appendChild(adTime);
@@ -129,9 +135,20 @@
     }
   }
 
+  function onAdsAdStarted(player, adDurationEl) {
+    debug(player, 'Start to set current ad pos and total ads');
+    var countAdsEl = adCountAdsEl(adDurationEl);
+    countAdsEl.innerHTML = '&nbsp;' + (player.ads.pod.id + " of " + player.ads.pod.size);
+  }
+
   function onAdPlay(player, adDurationEl) {
     debug(player, "IMA Countdown timerInterval Started");
     player.countdown.timerInterval = setInterval(timeRemaining.bind(player, player, adDurationEl), 250);
+  }
+
+  function onAdStop(player) {
+    debug(player, "IMA Countdown timerInterval Stopped");
+    clearInterval(player.countdown.timerInterval);
   }
 
   function onAdLoad(player, adDurationEl) {
@@ -142,13 +159,19 @@
       onAdPlay(player, adDurationEl);
     });
     player.on('ads-play', function () {
-      console.log('ads-play', player); // onAdPlay(player);
+      console.log('ads-play', player);
+      onAdPlay(player, adDurationEl);
     });
     player.on('adend', function () {
-      console.log('adend', player); // onAdStop(player);
+      console.log('adend', player);
+      onAdStop(player);
     });
     player.on('ads-pause', function () {
-      console.log('ads-pause', player); // onAdStop(player);
+      console.log('ads-pause', player);
+      onAdStop(player);
+    });
+    player.on('ads-ad-started', function () {
+      onAdsAdStarted(player, adDurationEl);
     });
   } // Cross-compatibility for Video.js 5 and 6.
 
@@ -177,7 +200,7 @@
     settings.timeEl = null;
     settings.timeRemaining = null;
     player.countdown = settings;
-    console.log('playerlocal14', player);
+    console.log('playerlocal15', player);
     var controlBar = player.controlBar.el();
     var adDurationEl = createAdDurationEl();
     controlBar.appendChild(adDurationEl); // add control
