@@ -143,8 +143,7 @@
 
   function onAdsAdEnded(player, adDurationEl) {
     debug(player, "Destroy adDuration Element");
-    var controlBar = player.controlBar.el();
-    console.log('controlBar', controlBar); // controlBar.removeChild(adDurationEl);
+    adDurationEl.parentNode.removeChild(adDurationEl);
   }
 
   function onAdPlay(player, adDurationEl) {
@@ -177,7 +176,7 @@
       onAdsAdStarted(player, adDurationEl);
     });
     player.on('ads-ad-ended', function () {
-      onAdsAdEnded(player);
+      onAdsAdEnded(player, adDurationEl);
     });
   } // Cross-compatibility for Video.js 5 and 6.
 
@@ -206,7 +205,7 @@
     settings.timeEl = null;
     settings.timeRemaining = null;
     player.countdown = settings;
-    console.log('playerlocal18', player);
+    console.log('playerlocal19', player);
     var controlBar = player.controlBar.el();
     var adDurationEl = createAdDurationEl();
     controlBar.appendChild(adDurationEl); // add control
