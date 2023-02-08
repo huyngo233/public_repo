@@ -133,6 +133,8 @@
 	  return CountdownComp;
 	}(Component);
 
+	videojs__default['default'].registerComponent('CountdownComp', CountdownComp);
+
 	var debug = function debug(player, value) {
 	  /* eslint-disable no-console */
 	  if (player.countdown.debug) {
