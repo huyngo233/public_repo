@@ -70,7 +70,7 @@
 	};
 
 	function updateTime(player, remainingTime) {
-	  var timeRemainingEl = player.countdown.timeEl;
+	  player.countdown.timeEl;
 	  var timeHTML = '';
 
 	  if (remainingTime !== 0) {
@@ -85,8 +85,7 @@
 	  }
 
 	  debug(player, 'IMA Countdown Remaining: ' + timeHTML);
-	  console.log('timeRemainingEl', timeRemainingEl);
-	  timeRemainingEl.innerHTML = timeHTML;
+	  console.log('timeHTML', timeHTML); // timeRemainingEl.innerHTML = timeHTML;
 	} // function addControl(player) {
 	//   const adControlBar = player.getChild('ControlBar');
 	//   return adControlBar.addChild(
@@ -155,7 +154,7 @@
 	  settings.timeEl = null;
 	  settings.timeRemaining = null;
 	  player.countdown = settings;
-	  console.log('playerlocal10', player); // add control
+	  console.log('playerlocal11', player); // add control
 	  // const controlBar = player.getChild('ControlBar');
 	  // const Countdown = new CountdownComp(player, settings);
 	  // console.log('CountdownComp', Countdown)
