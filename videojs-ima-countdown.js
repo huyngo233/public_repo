@@ -131,7 +131,7 @@
 
   function onAdPlay(player, adDurationEl) {
     debug(player, "IMA Countdown timerInterval Started");
-    player.countdown.timerInterval = setInterval(timeRemaining.bind(player, adDurationEl), 250);
+    player.countdown.timerInterval = setInterval(timeRemaining.bind(player, player, adDurationEl), 250);
   }
 
   function onAdLoad(player, adDurationEl) {
@@ -177,7 +177,7 @@
     settings.timeEl = null;
     settings.timeRemaining = null;
     player.countdown = settings;
-    console.log('playerlocal13', player);
+    console.log('playerlocal14', player);
     var controlBar = player.controlBar.el();
     var adDurationEl = createAdDurationEl();
     controlBar.appendChild(adDurationEl); // add control
