@@ -38,7 +38,7 @@
 	  module.exports["default"] = module.exports, module.exports.__esModule = true;
 	});
 
-	var inheritsLoose = createCommonjsModule(function (module) {
+	createCommonjsModule(function (module) {
 	  function _inheritsLoose(subClass, superClass) {
 	    subClass.prototype = Object.create(superClass.prototype);
 	    subClass.prototype.constructor = subClass;
@@ -51,87 +51,13 @@
 
 	var version = "0.0.0";
 
-	var Component = videojs__default['default'].getComponent('Component'); // Default options for the plugin.
+	videojs__default['default'].getComponent('Component'); // Default options for the plugin.
 
 	var defaults = {
 	  debug: false,
 	  text: 'AD',
 	  controlBarPosition: 1
 	};
-
-	var CountdownComp = /*#__PURE__*/function (_Component) {
-	  inheritsLoose(CountdownComp, _Component);
-
-	  function CountdownComp(player, options) {
-	    if (options === void 0) {
-	      options = {};
-	    }
-
-	    return _Component.call(this, player, options) || this;
-	  }
-
-	  var _proto = CountdownComp.prototype;
-
-	  _proto.buildCSSClass = function buildCSSClass() {
-	    return 'vjs-ima-countdown';
-	  };
-
-	  _proto.createEl = function createEl(tag, props, attributes) {
-	    if (tag === void 0) {
-	      tag = 'div';
-	    }
-
-	    if (props === void 0) {
-	      props = {};
-	    }
-
-	    if (attributes === void 0) {
-	      attributes = {};
-	    }
-
-	    props = {
-	      className: 'vjs-ima-countdown vjs-time-control'
-	    };
-
-	    var el = _Component.prototype.createEl.call(this, tag, props, attributes);
-
-	    this.createTextEl(el);
-	    this.createTimeEl(el);
-	    return el;
-	  };
-
-	  _proto.createTextEl = function createTextEl(el) {
-	    this.textEl_ = videojs__default['default'].createEl('span', {
-	      className: 'vjs-ima-countdown-text'
-	    });
-
-	    if (el) {
-	      el.appendChild(this.textEl_);
-	    }
-
-	    if (this.options_.text !== '') {
-	      console.log(this.options_);
-	      this.textEl_.innerHTML = this.options_.text;
-	    }
-
-	    return this.textEl_;
-	  };
-
-	  _proto.createTimeEl = function createTimeEl(el) {
-	    this.timeEl_ = videojs__default['default'].createEl('span', {
-	      className: 'vjs-ima-countdown-time'
-	    });
-
-	    if (el) {
-	      el.appendChild(this.timeEl_);
-	    }
-
-	    this.timeEl_.innerHTML = '';
-	    return this.timeEl_;
-	  };
-
-	  return CountdownComp;
-	}(Component); // videojs.registerComponent('CountdownComp', CountdownComp);
 
 
 	var debug = function debug(player, value) {
@@ -229,12 +155,12 @@
 	  settings.timeEl = null;
 	  settings.timeRemaining = null;
 	  player.countdown = settings;
-	  console.log('playerlocal9', player); // add control
-
-	  var controlBar = player.getChild('ControlBar');
-	  var Countdown = new CountdownComp(player, settings);
-	  console.log('CountdownComp', Countdown);
-	  controlBar.addChild(Countdown, player.countdown); // end add control
+	  console.log('playerlocal10', player); // add control
+	  // const controlBar = player.getChild('ControlBar');
+	  // const Countdown = new CountdownComp(player, settings);
+	  // console.log('CountdownComp', Countdown)
+	  // controlBar.addChild(Countdown, player.countdown);
+	  // end add control
 
 	  player.on('ads-load', function () {
 	    onAdLoad(player);
