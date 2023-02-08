@@ -190,9 +190,34 @@
     player.on('ads-load', function () {
       onAdLoad(player);
     });
-    console.log('last-player', player);
   };
   /**
    * A video.js plugin.
    *
    * In the plugin function, the value of `this` is a video.js `Player`
+   * instance. You cannot rely on the player being in a "ready" state here,
+   * depending on how the plugin is invoked. This may or may not be important
+   * to you; if not, remove the wait for "ready"!
+   *
+   * @function imaCountdown
+   * @param    {Object} [options={}]
+   *           An object of options left to the plugin author to define.
+   */
+
+
+  var imaCountdown = function imaCountdown(options) {
+    var _this = this;
+
+    this.ready(function () {
+      onPlayerReady(_this, videojs__default['default'].mergeOptions(defaults, options));
+    });
+  }; // Register the plugin with video.js.
+
+
+  registerPlugin('imaCountdown', imaCountdown); // Include the version number.
+
+  imaCountdown.VERSION = version;
+
+  return imaCountdown;
+
+})));
