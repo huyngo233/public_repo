@@ -11,7 +11,7 @@
 
   var version = "0.0.0";
 
-  var Component = videojs__default['default'].getComponent('Component'); // Default options for the plugin.
+  videojs__default['default'].getComponent('Component'); // Default options for the plugin.
 
   var defaults = {
     debug: false,
@@ -106,20 +106,20 @@
     var time = document.createElement('span');
     time.className = 'vjs-text';
     time.innerHTML = "0:00";
-    controlBar.appendChild(time);
-    var newComponent = new Component(player);
-    var countdownComp = new newComponent(player, {
-      children: ['div', {
-        name: 'span',
-        controlText: defaults.text,
-        className: 'vjs-ima-countdown-text'
-      }, {
-        name: 'span',
-        controlText: '',
-        className: 'vjs-ima-countdown-time'
-      }]
-    });
-    player.getChild('ControlBar').addChild(countdownComp);
+    controlBar.appendChild(time); // const newComponent = new Component(player);
+    // const countdownComp = new newComponent(player, {
+    //   children: ['div', {
+    //     name: 'span',
+    //     controlText: defaults.text,
+    //     className: 'vjs-ima-countdown-text'
+    //   }, {
+    //     name: 'span',
+    //     controlText: '',
+    //     className: 'vjs-ima-countdown-time'
+    //   }]
+    // });
+
+    console.log('controlbar', player.getChild('ControlBar'));
     player.on('ads-load', function () {
       onAdLoad(player);
     });
