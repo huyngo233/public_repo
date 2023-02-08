@@ -110,6 +110,7 @@
 	    }
 
 	    if (this.options_.text !== '') {
+	      console.log(this.options_);
 	      this.textEl_.innerHTML = this.options_.text;
 	    }
 
@@ -131,20 +132,35 @@
 
 	  return CountdownComp;
 	}(Component);
-	//   const timeRemainingEl = player.countdown.timeEl;
-	//   let timeHTML = '';
-	//   if (remainingTime !== 0) {
-	//     let remainingMinutes = Math.floor(remainingTime / 60);
-	//     let remainingSeconds = Math.floor(remainingTime % 60);
-	//     if (remainingSeconds.toString().length < 2) {
-	//       remainingSeconds = '0' + remainingSeconds;
-	//     }
-	//     timeHTML = `&nbsp;${remainingMinutes}:${remainingSeconds}`;
-	//   }
-	//   debug(player, 'IMA Countdown Remaining: ' + timeHTML);
-	//   timeRemainingEl.innerHTML = timeHTML;
-	// }
-	// function addControl(player) {
+
+	var debug = function debug(player, value) {
+	  /* eslint-disable no-console */
+	  if (player.countdown.debug) {
+	    console.info(value);
+	  }
+	  /* eslint-enable no-console */
+
+	};
+
+	function updateTime(player, remainingTime) {
+	  var timeRemainingEl = player.countdown.timeEl;
+	  var timeHTML = '';
+
+	  if (remainingTime !== 0) {
+	    var remainingMinutes = Math.floor(remainingTime / 60);
+	    var remainingSeconds = Math.floor(remainingTime % 60);
+
+	    if (remainingSeconds.toString().length < 2) {
+	      remainingSeconds = '0' + remainingSeconds;
+	    }
+
+	    timeHTML = "&nbsp;" + remainingMinutes + ":" + remainingSeconds;
+	  }
+
+	  debug(player, 'IMA Countdown Remaining: ' + timeHTML);
+	  console.log('timeRemainingEl', timeRemainingEl);
+	  timeRemainingEl.innerHTML = timeHTML;
+	} // function addControl(player) {
 	//   const adControlBar = player.getChild('ControlBar');
 	//   return adControlBar.addChild(
 	// 		'Countdown',
@@ -152,31 +168,29 @@
 	// 		[player.countdown.controlBarPosition]
 	// 	);
 	// }
-	// function timeRemaining(player) {
-	//   const remainingTime = player.ima3.adsManager.getRemainingTime();
-	//   if (player.ads.state !== 'ad-playback') {
-	//     updateTime(player, 0);
-	//   } else {
-	//     updateTime(player, remainingTime);
-	//   }
-	// }
-	// function onAdPlay(player) {
-	//   debug(player, `IMA Countdown timerInterval Started`);
-	//   player.countdown.timerInterval = setInterval(
-	//     timeRemaining.bind(player, player), 250
-	//   );
-	// }
-	// function onAdStop(player) {
-	//   debug(player, `IMA Countdown timerInterval Stopped`);
-	//   clearInterval(player.countdown.timerInterval);
-	// }
 
+
+	function timeRemaining(player) {
+	  var remainingTime = player.ima3.adsManager.getRemainingTime();
+
+	  if (player.ads.state !== 'ad-playback') {
+	    updateTime(player, 0);
+	  } else {
+	    updateTime(player, remainingTime);
+	  }
+	}
+
+	function onAdPlay(player) {
+	  debug(player, "IMA Countdown timerInterval Started");
+	  player.countdown.timerInterval = setInterval(timeRemaining.bind(player, player), 250);
+	}
 
 	function onAdLoad(player) {
 	  // const countdown = addControl(player);
 	  // player.countdown.timeEl = countdown.timeEl_;
 	  player.on('adstart', function () {
-	    console.log('adstart', player); // onAdPlay(player);
+	    console.log('adstart', player);
+	    onAdPlay(player);
 	  });
 	  player.on('ads-play', function () {
 	    console.log('ads-play', player); // onAdPlay(player);
@@ -214,17 +228,16 @@
 	  settings.timeEl = null;
 	  settings.timeRemaining = null;
 	  player.countdown = settings;
-	  console.log('playerlocal5', player);
+	  console.log('playerlocal7', player); // add control
+
 	  var controlBar = player.getChild('ControlBar');
-	  var time = document.createElement('span');
-	  time.className = 'vjs-text';
-	  time.innerHTML = "0:00";
-	  controlBar.appendChild(time);
-	  var Countdown = new CountdownComp(myVideoPlayer);
-	  controlBar.addChild(Countdown);
+	  var Countdown = new CountdownComp(player, settings);
+	  controlBar.addChild(Countdown, player.countdown); // end add control
+
 	  player.on('ads-load', function () {
 	    onAdLoad(player);
 	  });
+	  console.log('last-player', player);
 	};
 	/**
 	 * A video.js plugin.
