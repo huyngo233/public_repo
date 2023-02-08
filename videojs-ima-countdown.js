@@ -1,269 +1,156 @@
 /*! @name videojs-ima-countdown-nzh @version 0.0.0 @license MIT */
 (function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('video.js')) :
-	typeof define === 'function' && define.amd ? define(['video.js'], factory) :
-	(global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.videojsImaCountdownNzh = factory(global.videojs));
+  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('video.js')) :
+  typeof define === 'function' && define.amd ? define(['video.js'], factory) :
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.videojsImaCountdownNzh = factory(global.videojs));
 }(this, (function (videojs) { 'use strict';
 
-	function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+  function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
-	var videojs__default = /*#__PURE__*/_interopDefaultLegacy(videojs);
+  var videojs__default = /*#__PURE__*/_interopDefaultLegacy(videojs);
 
-	function createCommonjsModule(fn, basedir, module) {
-		return module = {
-		  path: basedir,
-		  exports: {},
-		  require: function (path, base) {
-	      return commonjsRequire(path, (base === undefined || base === null) ? module.path : base);
-	    }
-		}, fn(module, module.exports), module.exports;
-	}
+  var version = "0.0.0";
 
-	function commonjsRequire () {
-		throw new Error('Dynamic requires are not currently supported by @rollup/plugin-commonjs');
-	}
+  var Component = videojs__default['default'].getComponent('Component'); // Default options for the plugin.
 
-	var getPrototypeOf = createCommonjsModule(function (module) {
-	  function _getPrototypeOf(o) {
-	    module.exports = _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) {
-	      return o.__proto__ || Object.getPrototypeOf(o);
-	    };
-	    module.exports["default"] = module.exports, module.exports.__esModule = true;
-	    return _getPrototypeOf(o);
-	  }
-
-	  module.exports = _getPrototypeOf;
-	  module.exports["default"] = module.exports, module.exports.__esModule = true;
-	});
-
-	var superPropBase = createCommonjsModule(function (module) {
-	  function _superPropBase(object, property) {
-	    while (!Object.prototype.hasOwnProperty.call(object, property)) {
-	      object = getPrototypeOf(object);
-	      if (object === null) break;
-	    }
-
-	    return object;
-	  }
-
-	  module.exports = _superPropBase;
-	  module.exports["default"] = module.exports, module.exports.__esModule = true;
-	});
-
-	var get = createCommonjsModule(function (module) {
-	  function _get(target, property, receiver) {
-	    if (typeof Reflect !== "undefined" && Reflect.get) {
-	      module.exports = _get = Reflect.get;
-	      module.exports["default"] = module.exports, module.exports.__esModule = true;
-	    } else {
-	      module.exports = _get = function _get(target, property, receiver) {
-	        var base = superPropBase(target, property);
-	        if (!base) return;
-	        var desc = Object.getOwnPropertyDescriptor(base, property);
-
-	        if (desc.get) {
-	          return desc.get.call(receiver);
-	        }
-
-	        return desc.value;
-	      };
-
-	      module.exports["default"] = module.exports, module.exports.__esModule = true;
-	    }
-
-	    return _get(target, property, receiver || target);
-	  }
-
-	  module.exports = _get;
-	  module.exports["default"] = module.exports, module.exports.__esModule = true;
-	});
-
-	var version = "0.0.0";
-
-	var _obj;
-	var Component = videojs__default['default'].getComponent('Component'); // Default options for the plugin.
-
-	var defaults = {
-	  debug: false,
-	  text: 'AD',
-	  controlBarPosition: 1
-	};
-	var Countdown = videojs__default['default'].extend(Component, _obj = {
-	  constructor: function constructor(player, options) {
-	    Component.apply(this, arguments);
-	  },
-	  buildCSSClass: function buildCSSClass() {
-	    return 'vjs-ima-countdown';
-	  },
-	  createEl: function createEl(tag, props, attributes) {
-	    if (tag === void 0) {
-	      tag = 'div';
-	    }
-
-	    if (props === void 0) {
-	      props = {};
-	    }
-
-	    if (attributes === void 0) {
-	      attributes = {};
-	    }
-
-	    props = {
-	      className: 'vjs-ima-countdown vjs-time-control'
-	    };
-
-	    var el = get(getPrototypeOf(_obj), "createEl", this).call(this, tag, props, attributes);
-
-	    this.createTextEl(el);
-	    this.createTimeEl(el);
-	    return el;
-	  },
-	  createTextEl: function createTextEl(el) {
-	    this.textEl_ = videojs__default['default'].createEl('span', {
-	      className: 'vjs-ima-countdown-text'
-	    });
-
-	    if (el) {
-	      el.appendChild(this.textEl_);
-	    }
-
-	    if (this.options_.text !== '') {
-	      this.textEl_.innerHTML = this.options_.text;
-	    }
-
-	    return this.textEl_;
-	  },
-	  createTimeEl: function createTimeEl(el) {
-	    this.timeEl_ = videojs__default['default'].createEl('span', {
-	      className: 'vjs-ima-countdown-time'
-	    });
-
-	    if (el) {
-	      el.appendChild(this.timeEl_);
-	    }
-
-	    this.timeEl_.innerHTML = '';
-	    return this.timeEl_;
-	  }
-	});
-	videojs__default['default'].registerComponent('Countdown', Countdown);
-	//   const timeRemainingEl = player.countdown.timeEl;
-	//   let timeHTML = '';
-	//   if (remainingTime !== 0) {
-	//     let remainingMinutes = Math.floor(remainingTime / 60);
-	//     let remainingSeconds = Math.floor(remainingTime % 60);
-	//     if (remainingSeconds.toString().length < 2) {
-	//       remainingSeconds = '0' + remainingSeconds;
-	//     }
-	//     timeHTML = `&nbsp;${remainingMinutes}:${remainingSeconds}`;
-	//   }
-	//   debug(player, 'IMA Countdown Remaining: ' + timeHTML);
-	//   timeRemainingEl.innerHTML = timeHTML;
-	// }
+  var defaults = {
+    debug: false,
+    text: 'AD',
+    controlBarPosition: 1
+  }; // const Countdown = videojs.extend(Component, {
+  //   const timeRemainingEl = player.countdown.timeEl;
+  //   let timeHTML = '';
+  //   if (remainingTime !== 0) {
+  //     let remainingMinutes = Math.floor(remainingTime / 60);
+  //     let remainingSeconds = Math.floor(remainingTime % 60);
+  //     if (remainingSeconds.toString().length < 2) {
+  //       remainingSeconds = '0' + remainingSeconds;
+  //     }
+  //     timeHTML = `&nbsp;${remainingMinutes}:${remainingSeconds}`;
+  //   }
+  //   debug(player, 'IMA Countdown Remaining: ' + timeHTML);
+  //   timeRemainingEl.innerHTML = timeHTML;
+  // }
+  // function addControl(player) {
+  //   const adControlBar = player.getChild('ControlBar');
+  //   return adControlBar.addChild(
+  // 		'Countdown',
+  // 		player.countdown,
+  // 		[player.countdown.controlBarPosition]
+  // 	);
+  // }
+  // function timeRemaining(player) {
+  //   const remainingTime = player.ima3.adsManager.getRemainingTime();
+  //   if (player.ads.state !== 'ad-playback') {
+  //     updateTime(player, 0);
+  //   } else {
+  //     updateTime(player, remainingTime);
+  //   }
+  // }
+  // function onAdPlay(player) {
+  //   debug(player, `IMA Countdown timerInterval Started`);
+  //   player.countdown.timerInterval = setInterval(
+  //     timeRemaining.bind(player, player), 250
+  //   );
+  // }
+  // function onAdStop(player) {
+  //   debug(player, `IMA Countdown timerInterval Stopped`);
+  //   clearInterval(player.countdown.timerInterval);
+  // }
 
 
-	function addControl(player) {
-	  var adControlBar = player.getChild('ControlBar');
-	  return adControlBar.addChild('Countdown', player.countdown, [player.countdown.controlBarPosition]);
-	} // function timeRemaining(player) {
-	//   const remainingTime = player.ima3.adsManager.getRemainingTime();
-	//   if (player.ads.state !== 'ad-playback') {
-	//     updateTime(player, 0);
-	//   } else {
-	//     updateTime(player, remainingTime);
-	//   }
-	// }
-	// function onAdPlay(player) {
-	//   debug(player, `IMA Countdown timerInterval Started`);
-	//   player.countdown.timerInterval = setInterval(
-	//     timeRemaining.bind(player, player), 250
-	//   );
-	// }
-	// function onAdStop(player) {
-	//   debug(player, `IMA Countdown timerInterval Stopped`);
-	//   clearInterval(player.countdown.timerInterval);
-	// }
+  function onAdLoad(player) {
+    // const countdown = addControl(player);
+    // player.countdown.timeEl = countdown.timeEl_;
+    player.on('adstart', function () {
+      console.log('adstart', player); // onAdPlay(player);
+    });
+    player.on('ads-play', function () {
+      console.log('ads-play', player); // onAdPlay(player);
+    });
+    player.on('adend', function () {
+      console.log('adend', player); // onAdStop(player);
+    });
+    player.on('ads-pause', function () {
+      console.log('ads-pause', player); // onAdStop(player);
+    });
+  } // Cross-compatibility for Video.js 5 and 6.
 
 
-	function onAdLoad(player) {
-	  var countdown = addControl(player);
-	  player.countdown.timeEl = countdown.timeEl_;
-	  player.on('adstart', function () {
-	    console.log('adstart', player); // onAdPlay(player);
-	  });
-	  player.on('ads-play', function () {
-	    console.log('ads-play', player); // onAdPlay(player);
-	  });
-	  player.on('adend', function () {
-	    console.log('adend', player); // onAdStop(player);
-	  });
-	  player.on('ads-pause', function () {
-	    console.log('ads-pause', player); // onAdStop(player);
-	  });
-	} // Cross-compatibility for Video.js 5 and 6.
+  var registerPlugin = videojs__default['default'].registerPlugin || videojs__default['default'].plugin; // const dom = videojs.dom || videojs;
+
+  /**
+   * Function to invoke when the player is ready.
+   *
+   * This is a great place for your plugin to initialize itself. When this
+   * function is called, the player will have its DOM and child components
+   * in place.
+   *
+   * @function onPlayerReady
+   * @param    {Player} player
+   *           A Video.js player object.
+   *
+   * @param    {Object} [options={}]
+   *           A plain object containing options for the plugin.
+   */
+
+  var onPlayerReady = function onPlayerReady(player, options) {
+    player.addClass('vjs-ima-countdown');
+    var settings = videojs__default['default'].mergeOptions({}, defaults, options || {});
+    settings.timerInterval = null;
+    settings.timeEl = null;
+    settings.timeRemaining = null;
+    player.countdown = settings;
+    console.log('playerlocal4', player);
+    var controlBar = player.controlBar.el();
+    var time = document.createElement('span');
+    time.className = 'vjs-text';
+    time.innerHTML = "0:00";
+    controlBar.appendChild(time);
+    var newComponent = new Component(player);
+    var countdownComp = new newComponent(player, {
+      children: ['div', {
+        name: 'span',
+        controlText: defaults.text,
+        className: 'vjs-ima-countdown-text'
+      }, {
+        name: 'span',
+        controlText: '',
+        className: 'vjs-ima-countdown-time'
+      }]
+    });
+    player.getChild('ControlBar').addChild(countdownComp);
+    player.on('ads-load', function () {
+      onAdLoad(player);
+    });
+  };
+  /**
+   * A video.js plugin.
+   *
+   * In the plugin function, the value of `this` is a video.js `Player`
+   * instance. You cannot rely on the player being in a "ready" state here,
+   * depending on how the plugin is invoked. This may or may not be important
+   * to you; if not, remove the wait for "ready"!
+   *
+   * @function imaCountdown
+   * @param    {Object} [options={}]
+   *           An object of options left to the plugin author to define.
+   */
 
 
-	var registerPlugin = videojs__default['default'].registerPlugin || videojs__default['default'].plugin; // const dom = videojs.dom || videojs;
+  var imaCountdown = function imaCountdown(options) {
+    var _this = this;
 
-	/**
-	 * Function to invoke when the player is ready.
-	 *
-	 * This is a great place for your plugin to initialize itself. When this
-	 * function is called, the player will have its DOM and child components
-	 * in place.
-	 *
-	 * @function onPlayerReady
-	 * @param    {Player} player
-	 *           A Video.js player object.
-	 *
-	 * @param    {Object} [options={}]
-	 *           A plain object containing options for the plugin.
-	 */
-
-	var onPlayerReady = function onPlayerReady(player, options) {
-	  player.addClass('vjs-ima-countdown');
-	  var settings = videojs__default['default'].mergeOptions({}, defaults, options || {});
-	  settings.timerInterval = null;
-	  settings.timeEl = null;
-	  settings.timeRemaining = null;
-	  player.countdown = settings;
-	  console.log('playerlocal3', player);
-	  var controlBar = player.controlBar.el();
-	  var time = document.createElement('span');
-	  time.className = 'vjs-text';
-	  time.innerHTML = "0:00";
-	  controlBar.appendChild(time);
-	  player.on('ads-load', function () {
-	    onAdLoad(player);
-	  });
-	};
-	/**
-	 * A video.js plugin.
-	 *
-	 * In the plugin function, the value of `this` is a video.js `Player`
-	 * instance. You cannot rely on the player being in a "ready" state here,
-	 * depending on how the plugin is invoked. This may or may not be important
-	 * to you; if not, remove the wait for "ready"!
-	 *
-	 * @function imaCountdown
-	 * @param    {Object} [options={}]
-	 *           An object of options left to the plugin author to define.
-	 */
+    this.ready(function () {
+      onPlayerReady(_this, videojs__default['default'].mergeOptions(defaults, options));
+    });
+  }; // Register the plugin with video.js.
 
 
-	var imaCountdown = function imaCountdown(options) {
-	  var _this = this;
+  registerPlugin('imaCountdown', imaCountdown); // Include the version number.
 
-	  this.ready(function () {
-	    onPlayerReady(_this, videojs__default['default'].mergeOptions(defaults, options));
-	  });
-	}; // Register the plugin with video.js.
+  imaCountdown.VERSION = version;
 
-
-	registerPlugin('imaCountdown', imaCountdown); // Include the version number.
-
-	imaCountdown.VERSION = version;
-
-	return imaCountdown;
+  return imaCountdown;
 
 })));
