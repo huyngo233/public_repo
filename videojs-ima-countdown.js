@@ -81,7 +81,7 @@
         remainingSeconds = '0' + remainingSeconds;
       }
 
-      timeHTML = "&nbsp;" + remainingMinutes + ":" + remainingSeconds;
+      timeHTML = remainingMinutes + ":" + remainingSeconds;
     }
 
     debug(player, 'IMA Countdown Remaining: ' + timeHTML);
