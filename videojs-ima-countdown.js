@@ -156,9 +156,12 @@
     clearInterval(player.countdown.timerInterval);
   }
 
-  function onAdLoad(player, adDurationEl) {
+  function onAdLoad(player) {
     // const countdown = addControl(player);
     // player.countdown.timeEl = countdown.timeEl_;
+    var controlBar = player.controlBar.el();
+    var adDurationEl = createAdDurationEl();
+    controlBar.appendChild(adDurationEl);
     player.on('adstart', function () {
       console.log('adstart', player);
       onAdPlay(player, adDurationEl);
@@ -168,15 +171,13 @@
     });
     player.on('adend', function () {
       onAdStop(player);
+      onAdsAdEnded(player, adDurationEl);
     });
     player.on('ads-pause', function () {
       onAdStop(player);
     });
     player.on('ads-ad-started', function () {
       onAdsAdStarted(player, adDurationEl);
-    });
-    player.on('ads-ad-ended', function () {
-      onAdsAdEnded(player, adDurationEl);
     });
   } // Cross-compatibility for Video.js 5 and 6.
 
@@ -205,10 +206,10 @@
     settings.timeEl = null;
     settings.timeRemaining = null;
     player.countdown = settings;
-    console.log('playerlocal19', player);
-    var controlBar = player.controlBar.el();
-    var adDurationEl = createAdDurationEl();
-    controlBar.appendChild(adDurationEl); // add control
+    console.log('playerlocal20', player); // const controlBar = player.controlBar.el();
+    // const adDurationEl = createAdDurationEl();
+    // controlBar.appendChild(adDurationEl);
+    // add control
     // const controlBar = player.getChild('ControlBar');
     // const Countdown = new CountdownComp(player, settings);
     // console.log('CountdownComp', Countdown)
@@ -216,7 +217,7 @@
     // end add control
 
     player.on('ads-load', function () {
-      onAdLoad(player, adDurationEl);
+      onAdLoad(player);
     });
   };
   /**
