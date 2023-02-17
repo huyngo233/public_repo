@@ -222,7 +222,6 @@
   function onAdLoad(player) {
     // const countdown = addControl(player);
     // player.countdown.timeEl = countdown.timeEl_;
-    console.log('playlocal23', player);
     var controlBar = player.controlBar.el();
     var fullScreenToggleEl = player.getChild('ControlBar').getChild('FullscreenToggle').el();
     var adDurationEl = createAdDurationEl();
@@ -269,7 +268,8 @@
     settings.timerInterval = null;
     settings.timeEl = null;
     settings.timeRemaining = null;
-    player.countdown = settings; // const controlBar = player.controlBar.el();
+    player.countdown = settings;
+    console.log('playlocal24', player); // const controlBar = player.controlBar.el();
     // const adDurationEl = createAdDurationEl();
     // controlBar.appendChild(adDurationEl);
     // add control
