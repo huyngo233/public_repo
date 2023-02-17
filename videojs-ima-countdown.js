@@ -11,7 +11,8 @@
 
   var version = "0.0.0";
 
-  videojs__default['default'].getComponent('Component'); // Default options for the plugin.
+  /* eslint-env browser */
+  // Default options for the plugin.
 
   var defaults = {
     debug: false,
@@ -68,6 +69,26 @@
 
   };
 
+  var adRemainingTimeEl = function adRemainingTimeEl(adDurationEl) {
+    return adDurationEl.querySelector('.vjs-ima-countdown-time');
+  };
+
+  var adCountAdsEl = function adCountAdsEl(adDurationEl) {
+    return adDurationEl.querySelector('.vjs-ima-countdown-ads-count');
+  };
+  /**
+   * Function to define ad time remaining then insert to dom element
+   *
+   * @function updateTime
+   * @param {Player} player
+   *        A Video.js player object.
+   * @param {string} remainingTime
+   *        time remaining value
+   * @param {HTMLElement} adDurationEl
+   *        Html node of ad time duration
+   */
+
+
   function updateTime(player, remainingTime, adDurationEl) {
     // const timeRemainingEl = player.countdown.timeEl;
     var timeRemainingEl = adRemainingTimeEl(adDurationEl);
@@ -96,34 +117,35 @@
   // }
 
 
-  var adRemainingTimeEl = function adRemainingTimeEl(adDurationEl) {
-    return adDurationEl.querySelector(".vjs-ima-countdown-time");
-  };
-
-  var adCountAdsEl = function adCountAdsEl(adDurationEl) {
-    return adDurationEl.querySelector(".vjs-ima-countdown-ads-count");
-  };
-
   var createAdDurationEl = function createAdDurationEl() {
-    var countdownDiv = document.createElement("div");
-    countdownDiv.className = "vjs-ima-countdown vjs-time-control";
-    var adTxtEl = document.createElement("span");
-    adTxtEl.className = "vjs-ima-countdown-child vjs-ima-countdown-text";
+    var countdownDiv = document.createElement('div');
+    countdownDiv.className = 'vjs-ima-countdown vjs-time-control';
+    var adTxtEl = document.createElement('span');
+    adTxtEl.className = 'vjs-ima-countdown-child vjs-ima-countdown-text';
     adTxtEl.innerText = defaults.text;
     countdownDiv.appendChild(adTxtEl);
-    var adsCount = document.createElement("span");
-    adsCount.className = "vjs-ima-countdown-child vjs-ima-countdown-ads-count";
-    adsCount.innerText = "0 of 0";
+    var adsCount = document.createElement('span');
+    adsCount.className = 'vjs-ima-countdown-child vjs-ima-countdown-ads-count';
+    adsCount.innerText = '0 of 0';
     countdownDiv.appendChild(adsCount);
-    var adConectDot = document.createElement("span");
-    adConectDot.className = "vjs-ima-countdown-child vjs-ima-countdown-ad-connect-dot";
-    adConectDot.innerText = ".";
+    var adConectDot = document.createElement('span');
+    adConectDot.className = 'vjs-ima-countdown-child vjs-ima-countdown-ad-connect-dot';
+    adConectDot.innerText = '.';
     countdownDiv.appendChild(adConectDot);
-    var adTime = document.createElement("span");
-    adTime.className = "vjs-ima-countdown-child vjs-ima-countdown-time";
+    var adTime = document.createElement('span');
+    adTime.className = 'vjs-ima-countdown-child vjs-ima-countdown-time';
     countdownDiv.appendChild(adTime);
     return countdownDiv;
   };
+  /**
+   * get ad time remaining from im3 plugin
+   *
+   * @param {Player} player
+   *        A Video.js player object.
+   * @param {HTMLElement} adDurationEl
+   *        Html node of adtime
+   */
+
 
   function timeRemaining(player, adDurationEl) {
     var remainingTime = player.ima3.adsManager.getRemainingTime();
@@ -134,31 +156,73 @@
       updateTime(player, remainingTime, adDurationEl);
     }
   }
+  /**
+   * Insert ad Time node into controlbar
+   *
+   * @param {Player} player
+   *        A Video.js player object.
+   * @param {HTMLElement} adDurationEl
+   *        Html node of adtime
+   */
+
 
   function onAdsAdStarted(player, adDurationEl) {
     debug(player, 'Start to set current ad pos and total ads');
     var countAdsEl = adCountAdsEl(adDurationEl);
     countAdsEl.innerHTML = player.ads.pod.id + " of " + player.ads.pod.size;
   }
+  /**
+   * Remove ad Time node into controlbar
+   *
+   * @param {Player} player
+   *        A Video.js player object.
+   * @param {HTMLElement} adDurationEl
+   *        Html node of adtime
+   */
+
 
   function onAdsAdEnded(player, adDurationEl) {
-    debug(player, "Destroy adDuration Element");
+    debug(player, 'Destroy adDuration Element');
     adDurationEl.parentNode.removeChild(adDurationEl);
   }
+  /**
+   * Count and update time remaining for ad in Play mode
+   *
+   * @param {Player} player
+   *        A Video.js player object.
+   * @param {HTMLElement} adDurationEl
+   *        Html node of adtime
+   */
+
 
   function onAdPlay(player, adDurationEl) {
-    debug(player, "IMA Countdown timerInterval Started");
+    debug(player, 'IMA Countdown timerInterval Started');
     player.countdown.timerInterval = setInterval(timeRemaining.bind(player, player, adDurationEl), 250);
   }
+  /**
+   * Stop count and update time remaining for ad
+   *
+   * @param {Player} player
+   *        A Video.js player object.
+   */
+
 
   function onAdStop(player) {
-    debug(player, "IMA Countdown timerInterval Stopped");
+    debug(player, 'IMA Countdown timerInterval Stopped');
     clearInterval(player.countdown.timerInterval);
   }
+  /**
+   * Init callbacks methods for ad
+   *
+   * @param {Player} player
+   *        A Video.js player object.
+   */
+
 
   function onAdLoad(player) {
     // const countdown = addControl(player);
     // player.countdown.timeEl = countdown.timeEl_;
+    console.log('playlocal23', player);
     var controlBar = player.controlBar.el();
     var fullScreenToggleEl = player.getChild('ControlBar').getChild('FullscreenToggle').el();
     var adDurationEl = createAdDurationEl();
@@ -205,8 +269,7 @@
     settings.timerInterval = null;
     settings.timeEl = null;
     settings.timeRemaining = null;
-    player.countdown = settings;
-    console.log('playerlocal22', player); // const controlBar = player.controlBar.el();
+    player.countdown = settings; // const controlBar = player.controlBar.el();
     // const adDurationEl = createAdDurationEl();
     // controlBar.appendChild(adDurationEl);
     // add control
