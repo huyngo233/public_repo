@@ -169,7 +169,7 @@
   function onAdsAdStarted(player, adDurationEl) {
     debug(player, 'Start to set current ad pos and total ads');
     var countAdsEl = adCountAdsEl(adDurationEl);
-    countAdsEl.innerHTML = player.ads.pod.id + " of " + player.ads.pod.size;
+    countAdsEl.innerHTML = player.ads.ad.index + 1 + " of " + player.ads.pod.size;
   }
   /**
    * Remove ad Time node into controlbar
@@ -222,7 +222,7 @@
   function onAdLoad(player) {
     // const countdown = addControl(player);
     // player.countdown.timeEl = countdown.timeEl_;
-    console.log('adload', player);
+    if (!Object.keys(player.ads.ad).length) return;
     var controlBar = player.controlBar.el();
     var fullScreenToggleEl = player.getChild('ControlBar').getChild('FullscreenToggle').el();
     var adDurationEl = createAdDurationEl();
@@ -271,7 +271,7 @@
     settings.timeEl = null;
     settings.timeRemaining = null;
     player.countdown = settings;
-    console.log('playerlocal25', player); // const controlBar = player.controlBar.el();
+    console.log('playerlocal26', player); // const controlBar = player.controlBar.el();
     // const adDurationEl = createAdDurationEl();
     // controlBar.appendChild(adDurationEl);
     // add control
