@@ -227,6 +227,7 @@
     var adDurationEl = createAdDurationEl();
     controlBar.insertBefore(adDurationEl, fullScreenToggleEl);
     player.on('adstart', function () {
+      console.log('adstart', player);
       onAdPlay(player, adDurationEl);
     });
     player.on('ads-play', function () {
@@ -269,7 +270,7 @@
     settings.timeEl = null;
     settings.timeRemaining = null;
     player.countdown = settings;
-    console.log('playlocal24', player); // const controlBar = player.controlBar.el();
+    console.log('playerlocal24', player); // const controlBar = player.controlBar.el();
     // const adDurationEl = createAdDurationEl();
     // controlBar.appendChild(adDurationEl);
     // add control
