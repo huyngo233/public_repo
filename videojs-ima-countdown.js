@@ -225,15 +225,10 @@
     var controlBar = player.controlBar.el();
     var fullScreenToggleEl = player.getChild('ControlBar').getChild('FullscreenToggle').el();
     var adDurationEl = createAdDurationEl();
-    controlBar.insertBefore(adDurationEl, fullScreenToggleEl);
+    console.log('adType1', player.ads.adType);
     player.on('adstart', function () {
-      console.log('ads', player.ads);
-      console.log('ad', player.ads.ad);
-      console.log('isInAdMode', player.ads.isInAdMode());
-      console.log('adType', player.ads.adType);
-      console.log('pod', player.ads.pod);
-      console.log('contentSrc', player.ads.contentSrc);
-      console.log('ad-3432434', Object.keys(player.ads.ad).length, !Object.keys(player.ads.ad).length);
+      controlBar.insertBefore(adDurationEl, fullScreenToggleEl);
+      console.log('adType2', player.ads.adType);
       onAdPlay(player, adDurationEl);
     });
     player.on('ads-play', function () {
@@ -276,7 +271,7 @@
     settings.timeEl = null;
     settings.timeRemaining = null;
     player.countdown = settings;
-    console.log('playerlocal30', player); // const controlBar = player.controlBar.el();
+    console.log('playerlocal31', player); // const controlBar = player.controlBar.el();
     // const adDurationEl = createAdDurationEl();
     // controlBar.appendChild(adDurationEl);
     // add control
