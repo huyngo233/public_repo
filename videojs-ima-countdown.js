@@ -76,6 +76,10 @@
   var adCountAdsEl = function adCountAdsEl(adDurationEl) {
     return adDurationEl.querySelector('.vjs-ima-countdown-ads-count');
   };
+
+  var adImaCountdownEl = function adImaCountdownEl() {
+    return document.querySelector('.vjs-ima-countdown.vjs-time-control');
+  };
   /**
    * Function to define ad time remaining then insert to dom element
    *
@@ -225,10 +229,11 @@
     var controlBar = player.controlBar.el();
     var fullScreenToggleEl = player.getChild('ControlBar').getChild('FullscreenToggle').el();
     var adDurationEl = createAdDurationEl();
-    console.log('adType1', player.ads.adType);
     player.on('adstart', function () {
-      controlBar.insertBefore(adDurationEl, fullScreenToggleEl);
-      console.log('adType2', player.ads.adType);
+      if (!adImaCountdownEl) {
+        controlBar.insertBefore(adDurationEl, fullScreenToggleEl);
+      }
+
       onAdPlay(player, adDurationEl);
     });
     player.on('ads-play', function () {
@@ -271,7 +276,7 @@
     settings.timeEl = null;
     settings.timeRemaining = null;
     player.countdown = settings;
-    console.log('playerlocal31', player); // const controlBar = player.controlBar.el();
+    console.log('playerlocal32', player); // const controlBar = player.controlBar.el();
     // const adDurationEl = createAdDurationEl();
     // controlBar.appendChild(adDurationEl);
     // add control
