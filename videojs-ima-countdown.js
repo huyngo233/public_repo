@@ -95,9 +95,8 @@
    */
 
 
-  function updateTime(player, remainingTime) {
+  function updateTime(player, remainingTime, controlBar) {
     // const timeRemainingEl = player.countdown.timeEl;
-    var controlBar = player.controlBar.el();
     var timeRemainingEl = adRemainingTimeEl(controlBar);
     var timeHTML = '';
 
@@ -154,13 +153,13 @@
    */
 
 
-  function timeRemaining(player) {
+  function timeRemaining(player, controlBar) {
     var remainingTime = player.ima3.adsManager.getRemainingTime();
 
     if (player.ads.state !== 'ad-playback') {
-      updateTime(player, 0);
+      updateTime(player, 0, controlBar);
     } else {
-      updateTime(player, remainingTime);
+      updateTime(player, remainingTime, controlBar);
     }
   }
   /**
@@ -173,9 +172,8 @@
    */
 
 
-  function onAdsAdStarted(player) {
+  function onAdsAdStarted(player, controlBar) {
     debug(player, 'Start to set current ad pos and total ads');
-    var controlBar = player.controlBar.el();
     var countAdsEl = adCountAdsEl(controlBar);
     countAdsEl.innerHTML = player.ads.ad.index + 1 + " of " + player.ads.pod.size;
   }
@@ -189,9 +187,8 @@
    */
 
 
-  function onAdsAdEnded(player, adDurationEl) {
+  function onAdsAdEnded(player, adDurationEl, controlBar) {
     debug(player, 'Destroy adDuration Element');
-    var controlBar = player.controlBar.el();
     controlBar.removeChild(adDurationEl);
   }
   /**
@@ -204,9 +201,9 @@
    */
 
 
-  function onAdPlay(player) {
+  function onAdPlay(player, controlBar) {
     debug(player, 'IMA Countdown timerInterval Started');
-    player.countdown.timerInterval = setInterval(timeRemaining.bind(player, player), 250);
+    player.countdown.timerInterval = setInterval(timeRemaining.bind(player, player, controlBar), 250);
   }
   /**
    * Stop count and update time remaining for ad
@@ -239,20 +236,20 @@
         controlBar.insertBefore(adDurationEl, fullScreenToggleEl);
       }
 
-      onAdPlay(player);
+      onAdPlay(player, controlBar);
     });
     player.on('ads-play', function () {
-      onAdPlay(player);
+      onAdPlay(player, controlBar);
     });
     player.on('adend', function () {
       onAdStop(player);
-      onAdsAdEnded(player);
+      onAdsAdEnded(player, adDurationEl, controlBar);
     });
     player.on('ads-pause', function () {
       onAdStop(player);
     });
     player.on('ads-ad-started', function () {
-      onAdsAdStarted(player);
+      onAdsAdStarted(player, controlBar);
     });
   } // Cross-compatibility for Video.js 5 and 6.
 
@@ -281,7 +278,7 @@
     settings.timeEl = null;
     settings.timeRemaining = null;
     player.countdown = settings;
-    console.log('playerlocal34', player); // const controlBar = player.controlBar.el();
+    console.log('playerlocal35', player); // const controlBar = player.controlBar.el();
     // const adDurationEl = createAdDurationEl();
     // controlBar.appendChild(adDurationEl);
     // add control
