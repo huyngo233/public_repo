@@ -234,9 +234,8 @@
     var fullScreenToggleEl = player.getChild('ControlBar').getChild('FullscreenToggle').el();
     var adDurationEl = createAdDurationEl();
     player.on('adstart', function () {
-      if (!adImaCountdownEl()) {
-        controlBar.insertBefore(adDurationEl, fullScreenToggleEl);
-      }
+      // if (!adImaCountdownEl()) {
+      controlBar.insertBefore(adDurationEl, fullScreenToggleEl); // }
 
       onAdPlay(player, controlBar);
     });
@@ -280,7 +279,7 @@
     settings.timeEl = null;
     settings.timeRemaining = null;
     player.countdown = settings;
-    console.log('playerlocal36', player); // const controlBar = player.controlBar.el();
+    console.log('playerlocal37', player); // const controlBar = player.controlBar.el();
     // const adDurationEl = createAdDurationEl();
     // controlBar.appendChild(adDurationEl);
     // add control
