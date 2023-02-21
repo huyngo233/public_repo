@@ -68,19 +68,37 @@
     /* eslint-enable no-console */
 
   };
+  /**
+   * @function adImaCountdownEl
+   * @param {HTMLElement} controlBar
+   *        Html node of controlbar
+   */
+
 
   var adImaCountdownEl = function adImaCountdownEl(controlBar) {
     return controlBar.querySelector('.vjs-ima-countdown.vjs-time-control');
   };
+  /**
+   * @function adRemainingTimeEl
+   * @param {HTMLElement} controlBar
+   *        Html node of controlbar
+   */
+
 
   var adRemainingTimeEl = function adRemainingTimeEl(controlBar) {
     var currentImaCountdownEl = adImaCountdownEl(controlBar);
-    return currentImaCountdownEl.querySelector('.vjs-ima-countdown-time');
+    return currentImaCountdownEl ? currentImaCountdownEl.querySelector('.vjs-ima-countdown-time') : null;
   };
+  /**
+   * @function adCountAdsEl
+   * @param {HTMLElement} controlBar
+   *        Html node of controlbar
+   */
+
 
   var adCountAdsEl = function adCountAdsEl(controlBar) {
     var currentImaCountdownEl = adImaCountdownEl(controlBar);
-    return currentImaCountdownEl.querySelector('.vjs-ima-countdown-ads-count');
+    return currentImaCountdownEl ? currentImaCountdownEl.querySelector('.vjs-ima-countdown-ads-count') : null;
   };
   /**
    * Function to define ad time remaining then insert to dom element
@@ -90,14 +108,15 @@
    *        A Video.js player object.
    * @param {string} remainingTime
    *        time remaining value
-   * @param {HTMLElement} adDurationEl
-   *        Html node of ad time duration
+   * @param {HTMLElement} controlBar
+   *        Html node of controlbar
    */
 
 
   function updateTime(player, remainingTime, controlBar) {
     // const timeRemainingEl = player.countdown.timeEl;
     var timeRemainingEl = adRemainingTimeEl(controlBar);
+    if (!timeRemainingEl) return null;
     var timeHTML = '';
 
     if (remainingTime !== 0) {
@@ -148,8 +167,8 @@
    *
    * @param {Player} player
    *        A Video.js player object.
-   * @param {HTMLElement} adDurationEl
-   *        Html node of adtime
+   * @param {HTMLElement} controlBar
+   *        Html node of controlbar
    */
 
 
@@ -167,8 +186,8 @@
    *
    * @param {Player} player
    *        A Video.js player object.
-   * @param {HTMLElement} adDurationEl
-   *        Html node of adtime
+   * @param {HTMLElement} controlBar
+   *        Html node of controlbar
    */
 
 
@@ -184,6 +203,8 @@
    *        A Video.js player object.
    * @param {HTMLElement} adDurationEl
    *        Html node of adtime
+   * @param {HTMLElement} controlBar
+   *        Html node of controlbar
    */
 
 
@@ -196,8 +217,8 @@
    *
    * @param {Player} player
    *        A Video.js player object.
-   * @param {HTMLElement} adDurationEl
-   *        Html node of adtime
+   * @param {HTMLElement} controlBar
+   *        Html node of controlbar
    */
 
 
@@ -278,7 +299,7 @@
     settings.timeEl = null;
     settings.timeRemaining = null;
     player.countdown = settings;
-    console.log('playerlocal38', player); // const controlBar = player.controlBar.el();
+    console.log('playerlocal39', player); // const controlBar = player.controlBar.el();
     // const adDurationEl = createAdDurationEl();
     // controlBar.appendChild(adDurationEl);
     // add control
