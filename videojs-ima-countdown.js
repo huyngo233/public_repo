@@ -70,8 +70,6 @@
   };
 
   var adImaCountdownEl = function adImaCountdownEl(controlBar) {
-    console.log('controlBar', controlBar);
-    console.log('countdownEl', controlBar.querySelector('.vjs-ima-countdown.vjs-time-control'));
     return controlBar.querySelector('.vjs-ima-countdown.vjs-time-control');
   };
 
@@ -234,8 +232,9 @@
     var fullScreenToggleEl = player.getChild('ControlBar').getChild('FullscreenToggle').el();
     var adDurationEl = createAdDurationEl();
     player.on('adstart', function () {
-      // if (!adImaCountdownEl()) {
-      controlBar.insertBefore(adDurationEl, fullScreenToggleEl); // }
+      if (!adImaCountdownEl(controlBar)) {
+        controlBar.insertBefore(adDurationEl, fullScreenToggleEl);
+      }
 
       onAdPlay(player, controlBar);
     });
@@ -279,7 +278,7 @@
     settings.timeEl = null;
     settings.timeRemaining = null;
     player.countdown = settings;
-    console.log('playerlocal37', player); // const controlBar = player.controlBar.el();
+    console.log('playerlocal38', player); // const controlBar = player.controlBar.el();
     // const adDurationEl = createAdDurationEl();
     // controlBar.appendChild(adDurationEl);
     // add control
