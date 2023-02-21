@@ -69,16 +69,18 @@
 
   };
 
-  var adRemainingTimeEl = function adRemainingTimeEl(adDurationEl) {
-    return adDurationEl.querySelector('.vjs-ima-countdown-time');
+  var adImaCountdownEl = function adImaCountdownEl(controlBar) {
+    return controlBar.querySelector('.vjs-ima-countdown.vjs-time-control');
   };
 
-  var adCountAdsEl = function adCountAdsEl(adDurationEl) {
-    return adDurationEl.querySelector('.vjs-ima-countdown-ads-count');
+  var adRemainingTimeEl = function adRemainingTimeEl(controlBar) {
+    var currentImaCountdownEl = adImaCountdownEl(controlBar);
+    return currentImaCountdownEl.querySelector('.vjs-ima-countdown-time');
   };
 
-  var adImaCountdownEl = function adImaCountdownEl() {
-    return document.querySelector('.vjs-ima-countdown.vjs-time-control');
+  var adCountAdsEl = function adCountAdsEl(controlBar) {
+    var currentImaCountdownEl = adImaCountdownEl(controlBar);
+    return currentImaCountdownEl.querySelector('.vjs-ima-countdown-ads-count');
   };
   /**
    * Function to define ad time remaining then insert to dom element
@@ -93,9 +95,10 @@
    */
 
 
-  function updateTime(player, remainingTime, adDurationEl) {
+  function updateTime(player, remainingTime) {
     // const timeRemainingEl = player.countdown.timeEl;
-    var timeRemainingEl = adRemainingTimeEl(adDurationEl);
+    var controlBar = player.controlBar.el();
+    var timeRemainingEl = adRemainingTimeEl(controlBar);
     var timeHTML = '';
 
     if (remainingTime !== 0) {
@@ -151,13 +154,13 @@
    */
 
 
-  function timeRemaining(player, adDurationEl) {
+  function timeRemaining(player) {
     var remainingTime = player.ima3.adsManager.getRemainingTime();
 
     if (player.ads.state !== 'ad-playback') {
-      updateTime(player, 0, adDurationEl);
+      updateTime(player, 0);
     } else {
-      updateTime(player, remainingTime, adDurationEl);
+      updateTime(player, remainingTime);
     }
   }
   /**
@@ -170,9 +173,10 @@
    */
 
 
-  function onAdsAdStarted(player, adDurationEl) {
+  function onAdsAdStarted(player) {
     debug(player, 'Start to set current ad pos and total ads');
-    var countAdsEl = adCountAdsEl(adDurationEl);
+    var controlBar = player.controlBar.el();
+    var countAdsEl = adCountAdsEl(controlBar);
     countAdsEl.innerHTML = player.ads.ad.index + 1 + " of " + player.ads.pod.size;
   }
   /**
@@ -187,7 +191,8 @@
 
   function onAdsAdEnded(player, adDurationEl) {
     debug(player, 'Destroy adDuration Element');
-    adDurationEl.parentNode.removeChild(adDurationEl);
+    var controlBar = player.controlBar.el();
+    controlBar.removeChild(adDurationEl);
   }
   /**
    * Count and update time remaining for ad in Play mode
@@ -199,9 +204,9 @@
    */
 
 
-  function onAdPlay(player, adDurationEl) {
+  function onAdPlay(player) {
     debug(player, 'IMA Countdown timerInterval Started');
-    player.countdown.timerInterval = setInterval(timeRemaining.bind(player, player, adDurationEl), 250);
+    player.countdown.timerInterval = setInterval(timeRemaining.bind(player, player), 250);
   }
   /**
    * Stop count and update time remaining for ad
@@ -234,20 +239,20 @@
         controlBar.insertBefore(adDurationEl, fullScreenToggleEl);
       }
 
-      onAdPlay(player, adDurationEl);
+      onAdPlay(player);
     });
     player.on('ads-play', function () {
-      onAdPlay(player, adDurationEl);
+      onAdPlay(player);
     });
     player.on('adend', function () {
       onAdStop(player);
-      onAdsAdEnded(player, adDurationEl);
+      onAdsAdEnded(player);
     });
     player.on('ads-pause', function () {
       onAdStop(player);
     });
     player.on('ads-ad-started', function () {
-      onAdsAdStarted(player, adDurationEl);
+      onAdsAdStarted(player);
     });
   } // Cross-compatibility for Video.js 5 and 6.
 
@@ -276,7 +281,7 @@
     settings.timeEl = null;
     settings.timeRemaining = null;
     player.countdown = settings;
-    console.log('playerlocal33', player); // const controlBar = player.controlBar.el();
+    console.log('playerlocal34', player); // const controlBar = player.controlBar.el();
     // const adDurationEl = createAdDurationEl();
     // controlBar.appendChild(adDurationEl);
     // add control
