@@ -70,6 +70,8 @@
   };
 
   var adImaCountdownEl = function adImaCountdownEl(controlBar) {
+    console.log('controlBar', controlBar);
+    console.log('countdownEl', controlBar.querySelector('.vjs-ima-countdown.vjs-time-control'));
     return controlBar.querySelector('.vjs-ima-countdown.vjs-time-control');
   };
 
@@ -278,7 +280,7 @@
     settings.timeEl = null;
     settings.timeRemaining = null;
     player.countdown = settings;
-    console.log('playerlocal35', player); // const controlBar = player.controlBar.el();
+    console.log('playerlocal36', player); // const controlBar = player.controlBar.el();
     // const adDurationEl = createAdDurationEl();
     // controlBar.appendChild(adDurationEl);
     // add control
