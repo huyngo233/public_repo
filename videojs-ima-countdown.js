@@ -74,7 +74,11 @@
 
   function updateTime(player, remainingTime, controlBar) {
     var timeRemainingEl = adRemainingTimeEl(controlBar);
-    if (!timeRemainingEl) return null;
+
+    if (!timeRemainingEl) {
+      return null;
+    }
+
     var timeHTML = '';
 
     if (remainingTime !== 0) {
@@ -88,7 +92,6 @@
       timeHTML = remainingMinutes + ":" + remainingSeconds;
     }
 
-    debug(player, 'IMA Countdown Remaining: ' + timeHTML);
     timeRemainingEl.innerHTML = timeHTML;
   }
 
@@ -247,6 +250,7 @@
     settings.timeEl = null;
     settings.timeRemaining = null;
     player.countdown = settings;
+    console.log('playerlocal40', player);
     player.on('ads-load', function () {
       onAdLoad(player);
     });
