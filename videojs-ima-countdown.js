@@ -18,6 +18,7 @@
     text: 'AD',
     controlBarPosition: 1
   };
+  var AD_SHOWING_CLASS = 'videojs-ad-showing';
 
   var debug = function debug(player, value) {
     /* eslint-disable no-console */
@@ -164,6 +165,7 @@
   function onAdsAdEnded(player, adDurationEl, controlBar) {
     debug(player, 'Destroy adDuration Element');
     controlBar.removeChild(adDurationEl);
+    controlBar.removeClass(AD_SHOWING_CLASS);
   }
   /**
    * Count and update time remaining for ad in Play mode
@@ -205,6 +207,7 @@
     var adDurationEl = createAdDurationEl();
     player.on('adstart', function () {
       if (!adImaCountdownEl(controlBar)) {
+        controlBar.addClass(AD_SHOWING_CLASS);
         controlBar.insertBefore(adDurationEl, fullScreenToggleEl);
       }
 
@@ -250,7 +253,7 @@
     settings.timeEl = null;
     settings.timeRemaining = null;
     player.countdown = settings;
-    console.log('playerlocal40', player);
+    console.log('localplayer41', player);
     player.on('ads-load', function () {
       onAdLoad(player);
     });
