@@ -18,7 +18,6 @@
     text: 'AD',
     controlBarPosition: 1
   };
-  var AD_SHOWING_CLASS = 'videojs-ad-showing';
 
   var debug = function debug(player, value) {
     /* eslint-disable no-console */
@@ -162,11 +161,9 @@
    */
 
 
-  function onAdsAdEnded(player, adDurationEl, controlBar) {
+  function onAdsAdEnded(player, adDurationEl, controlBarEl) {
     debug(player, 'Destroy adDuration Element');
-    var controlBarEl = controlBar.el();
     controlBarEl.removeChild(adDurationEl);
-    controlBar.removeClass(AD_SHOWING_CLASS);
   }
   /**
    * Count and update time remaining for ad in Play mode
@@ -203,13 +200,11 @@
 
 
   function onAdLoad(player) {
-    var controlBar = player.controlBar;
     var controlBarEl = player.controlBar.el();
     var fullScreenToggleEl = player.getChild('ControlBar').getChild('FullscreenToggle').el();
     var adDurationEl = createAdDurationEl();
     player.on('adstart', function () {
       if (!adImaCountdownEl(controlBarEl)) {
-        controlBar.addClass(AD_SHOWING_CLASS);
         controlBarEl.insertBefore(adDurationEl, fullScreenToggleEl);
       }
 
@@ -220,7 +215,7 @@
     });
     player.on('adend', function () {
       onAdStop(player);
-      onAdsAdEnded(player, adDurationEl, controlBar);
+      onAdsAdEnded(player, adDurationEl, controlBarEl);
     });
     player.on('ads-pause', function () {
       onAdStop(player);
@@ -253,7 +248,7 @@
     settings.timeEl = null;
     settings.timeRemaining = null;
     player.countdown = settings;
-    console.log('localplayer42', player);
+    console.log('localplayer43', player);
     player.on('ads-load', function () {
       onAdLoad(player);
     });
