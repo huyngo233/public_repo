@@ -30,34 +30,34 @@
   };
   /**
    * @function adImaCountdownEl
-   * @param {HTMLElement} controlBar
+   * @param {HTMLElement} controlBarEl
    *        Html node of controlbar
    */
 
 
-  var adImaCountdownEl = function adImaCountdownEl(controlBar) {
-    return controlBar.querySelector('.vjs-ima-countdown.vjs-time-control');
+  var adImaCountdownEl = function adImaCountdownEl(controlBarEl) {
+    return controlBarEl.querySelector('.vjs-ima-countdown.vjs-time-control');
   };
   /**
    * @function adRemainingTimeEl
-   * @param {HTMLElement} controlBar
+   * @param {HTMLElement} controlBarEl
    *        Html node of controlbar
    */
 
 
-  var adRemainingTimeEl = function adRemainingTimeEl(controlBar) {
-    var currentImaCountdownEl = adImaCountdownEl(controlBar);
+  var adRemainingTimeEl = function adRemainingTimeEl(controlBarEl) {
+    var currentImaCountdownEl = adImaCountdownEl(controlBarEl);
     return currentImaCountdownEl ? currentImaCountdownEl.querySelector('.vjs-ima-countdown-time') : null;
   };
   /**
    * @function adCountAdsEl
-   * @param {HTMLElement} controlBar
+   * @param {HTMLElement} controlBarEl
    *        Html node of controlbar
    */
 
 
-  var adCountAdsEl = function adCountAdsEl(controlBar) {
-    var currentImaCountdownEl = adImaCountdownEl(controlBar);
+  var adCountAdsEl = function adCountAdsEl(controlBarEl) {
+    var currentImaCountdownEl = adImaCountdownEl(controlBarEl);
     return currentImaCountdownEl ? currentImaCountdownEl.querySelector('.vjs-ima-countdown-ads-count') : null;
   };
   /**
@@ -68,13 +68,13 @@
    *        A Video.js player object.
    * @param {string} remainingTime
    *        time remaining value
-   * @param {HTMLElement} controlBar
+   * @param {HTMLElement} controlBarEl
    *        Html node of controlbar
    */
 
 
-  function updateTime(player, remainingTime, controlBar) {
-    var timeRemainingEl = adRemainingTimeEl(controlBar);
+  function updateTime(player, remainingTime, controlBarEl) {
+    var timeRemainingEl = adRemainingTimeEl(controlBarEl);
 
     if (!timeRemainingEl) {
       return null;
@@ -121,18 +121,18 @@
    *
    * @param {Player} player
    *        A Video.js player object.
-   * @param {HTMLElement} controlBar
+   * @param {HTMLElement} controlBarEl
    *        Html node of controlbar
    */
 
 
-  function timeRemaining(player, controlBar) {
+  function timeRemaining(player, controlBarEl) {
     var remainingTime = player.ima3.adsManager.getRemainingTime();
 
     if (player.ads.state !== 'ad-playback') {
-      updateTime(player, 0, controlBar);
+      updateTime(player, 0, controlBarEl);
     } else {
-      updateTime(player, remainingTime, controlBar);
+      updateTime(player, remainingTime, controlBarEl);
     }
   }
   /**
@@ -140,14 +140,14 @@
    *
    * @param {Player} player
    *        A Video.js player object.
-   * @param {HTMLElement} controlBar
+   * @param {HTMLElement} controlBarEl
    *        Html node of controlbar
    */
 
 
-  function onAdsAdStarted(player, controlBar) {
+  function onAdsAdStarted(player, controlBarEl) {
     debug(player, 'Start to set current ad pos and total ads');
-    var countAdsEl = adCountAdsEl(controlBar);
+    var countAdsEl = adCountAdsEl(controlBarEl);
     countAdsEl.innerHTML = player.ads.ad.index + 1 + " of " + player.ads.pod.size;
   }
   /**
@@ -164,7 +164,8 @@
 
   function onAdsAdEnded(player, adDurationEl, controlBar) {
     debug(player, 'Destroy adDuration Element');
-    controlBar.removeChild(adDurationEl);
+    var controlBarEl = controlBar.el();
+    controlBarEl.removeChild(adDurationEl);
     controlBar.removeClass(AD_SHOWING_CLASS);
   }
   /**
@@ -172,14 +173,14 @@
    *
    * @param {Player} player
    *        A Video.js player object.
-   * @param {HTMLElement} controlBar
+   * @param {HTMLElement} controlBarEl
    *        Html node of controlbar
    */
 
 
-  function onAdPlay(player, controlBar) {
+  function onAdPlay(player, controlBarEl) {
     debug(player, 'IMA Countdown timerInterval Started');
-    player.countdown.timerInterval = setInterval(timeRemaining.bind(player, player, controlBar), 250);
+    player.countdown.timerInterval = setInterval(timeRemaining.bind(player, player, controlBarEl), 250);
   }
   /**
    * Stop count and update time remaining for ad
@@ -202,19 +203,20 @@
 
 
   function onAdLoad(player) {
-    var controlBar = player.controlBar.el();
+    var controlBar = player.controlBar;
+    var controlBarEl = player.controlBar.el();
     var fullScreenToggleEl = player.getChild('ControlBar').getChild('FullscreenToggle').el();
     var adDurationEl = createAdDurationEl();
     player.on('adstart', function () {
-      if (!adImaCountdownEl(controlBar)) {
+      if (!adImaCountdownEl(controlBarEl)) {
         controlBar.addClass(AD_SHOWING_CLASS);
-        controlBar.insertBefore(adDurationEl, fullScreenToggleEl);
+        controlBarEl.insertBefore(adDurationEl, fullScreenToggleEl);
       }
 
-      onAdPlay(player, controlBar);
+      onAdPlay(player, controlBarEl);
     });
     player.on('ads-play', function () {
-      onAdPlay(player, controlBar);
+      onAdPlay(player, controlBarEl);
     });
     player.on('adend', function () {
       onAdStop(player);
@@ -224,13 +226,11 @@
       onAdStop(player);
     });
     player.on('ads-ad-started', function () {
-      onAdsAdStarted(player, controlBar);
+      onAdsAdStarted(player, controlBarEl);
     });
-  } // Cross-compatibility for Video.js 5 and 6.
+  }
 
-
-  var registerPlugin = videojs__default['default'].registerPlugin || videojs__default['default'].plugin; // const dom = videojs.dom || videojs;
-
+  var registerPlugin = videojs__default['default'].registerPlugin || videojs__default['default'].plugin;
   /**
    * Function to invoke when the player is ready.
    *
@@ -253,7 +253,7 @@
     settings.timeEl = null;
     settings.timeRemaining = null;
     player.countdown = settings;
-    console.log('localplayer41', player);
+    console.log('localplayer42', player);
     player.on('ads-load', function () {
       onAdLoad(player);
     });
