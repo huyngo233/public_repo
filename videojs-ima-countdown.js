@@ -204,6 +204,7 @@
     var fullScreenToggleEl = player.getChild('ControlBar').getChild('FullscreenToggle').el();
     var adDurationEl = createAdDurationEl();
     player.on('adstart', function () {
+      console.log('adstart', player);
       if (!adImaCountdownEl(controlBarEl)) {
         controlBarEl.insertBefore(adDurationEl, fullScreenToggleEl);
       }
@@ -248,6 +249,7 @@
     settings.timeEl = null;
     settings.timeRemaining = null;
     player.countdown = settings;
+    console.log('playerlocal43', player);
     player.on('ads-load', function () {
       onAdLoad(player);
     });
