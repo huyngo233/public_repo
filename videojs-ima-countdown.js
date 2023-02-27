@@ -1,8 +1,8 @@
-/*! @name videojs-ima-countdown-nzh @version 1.0.0 @license MIT */
+/*! @name videojs-ima-countdown @version 1.0.0 @license MIT */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('video.js')) :
   typeof define === 'function' && define.amd ? define(['video.js'], factory) :
-  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.videojsImaCountdownNzh = factory(global.videojs));
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.videojsImaCountdown = factory(global.videojs));
 }(this, (function (videojs) { 'use strict';
 
   function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
@@ -248,7 +248,6 @@
     settings.timeEl = null;
     settings.timeRemaining = null;
     player.countdown = settings;
-    console.log('localplayer43', player);
     player.on('ads-load', function () {
       onAdLoad(player);
     });
