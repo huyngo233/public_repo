@@ -386,7 +386,7 @@ div[id$=end-next-slate] .iris-slate-text-container .iris-nzh-play-button.active 
   display: flex;
   order: 2;
   font-family: "Inter";
-  font-size: rem(12);
+  font-size: 0.75rem;
   line-height: 2.5;
 }
 .video-js.vjs-ad-playing .vjs-ad-control-bar .vjs-custom-control-spacer {
@@ -401,11 +401,11 @@ div[id$=end-next-slate] .iris-slate-text-container .iris-nzh-play-button.active 
   background-color: rgb(220, 225, 226);
 }
 .video-js .vjs-ad-playing.vjs-touch-enabled .vjs-ima-countdown.vjs-time-control {
-  padding: 0 rem(25);
+  padding: 0 1.563rem;
 }
 @media screen and (max-width: 576px) {
   .video-js .vjs-ad-playing.vjs-user-inactive .vjs-control-bar {
-    transform: translateY(rem(60)) !important;
+    transform: translateY(3.75rem) !important;
   }
 }
 
